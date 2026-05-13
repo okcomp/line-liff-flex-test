@@ -110,7 +110,7 @@ https://line-liff-flex-test.example.pages.dev/
 ## Endpoints
 
 - `GET /` serves the LIFF test page.
-- `GET /flex-message.json` returns the full Flex Message:
+- `GET flex-message.json` returns the full Flex Message from the same directory as the LIFF page:
 
 ```json
 {
