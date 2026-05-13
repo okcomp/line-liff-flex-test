@@ -81,6 +81,35 @@
         opacity: 0.55;
       }
 
+      .user-card {
+        display: grid;
+        grid-template-columns: 48px 1fr;
+        gap: 12px;
+        align-items: center;
+        margin-top: 18px;
+        padding: 12px;
+        background: #f6f6f6;
+        border: 1px solid #e4e4e4;
+        border-radius: 8px;
+      }
+
+      .avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #d8d8d8;
+        object-fit: cover;
+      }
+
+      .user-card dl {
+        grid-template-columns: 92px 1fr;
+        margin: 0;
+      }
+
+      .avatar[hidden] {
+        display: none;
+      }
+
       dl {
         display: grid;
         grid-template-columns: 120px 1fr;
@@ -142,6 +171,18 @@
         <dd id="endpoint"></dd>
       </dl>
 
+      <section class="user-card" aria-label="Current LINE user">
+        <img id="profileImage" class="avatar" alt="" hidden />
+        <dl>
+          <dt>Display name</dt>
+          <dd id="displayName">Loading...</dd>
+          <dt>User ID</dt>
+          <dd id="userId">Loading...</dd>
+          <dt>Email</dt>
+          <dd id="email">Loading...</dd>
+        </dl>
+      </section>
+
       <pre id="result" aria-live="polite"></pre>
     </main>
 
@@ -155,6 +196,10 @@
       const shareButton = document.querySelector("#shareButton");
       const closeButton = document.querySelector("#closeButton");
       const resultEl = document.querySelector("#result");
+      const profileImageEl = document.querySelector("#profileImage");
+      const displayNameEl = document.querySelector("#displayName");
+      const userIdEl = document.querySelector("#userId");
+      const emailEl = document.querySelector("#email");
 
       document.querySelector("#liffId").textContent = LIFF_ID;
       document.querySelector("#endpoint").textContent = MESSAGE_ENDPOINT;
@@ -167,6 +212,33 @@
       function showResult(value) {
         resultEl.textContent =
           typeof value === "string" ? value : JSON.stringify(value, null, 2);
+      }
+
+      function setUserField(element, value, fallback = "Unavailable") {
+        element.textContent = value || fallback;
+      }
+
+      async function loadCurrentUser() {
+        try {
+          const profile = await liff.getProfile();
+          setUserField(displayNameEl, profile.displayName);
+          setUserField(userIdEl, profile.userId);
+
+          if (profile.pictureUrl) {
+            profileImageEl.src = profile.pictureUrl;
+            profileImageEl.hidden = false;
+          }
+        } catch (error) {
+          setUserField(displayNameEl, null, "Profile unavailable");
+          setUserField(userIdEl, null, "Profile unavailable");
+        }
+
+        const idToken = liff.getDecodedIDToken();
+        setUserField(
+          emailEl,
+          idToken?.email,
+          "Unavailable. Enable email scope and re-authorize this LIFF app."
+        );
       }
 
       async function fetchFlexMessage() {
@@ -221,6 +293,8 @@
             liff.login({ redirectUri: window.location.href });
             return;
           }
+
+          await loadCurrentUser();
 
           if (!liff.isApiAvailable("shareTargetPicker")) {
             setStatus("shareTargetPicker is unavailable here.", true);
