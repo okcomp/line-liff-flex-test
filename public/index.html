@@ -124,7 +124,7 @@
   <body>
     <main>
       <h1>Airbnb listing LINE share test</h1>
-      <p>Use this page to open LINE's share target picker and send the PDP Flex Message to a selected friend.</p>
+      <p>This page opens LINE's share target picker and sends the PDP Flex Message to a selected friend.</p>
 
       <div id="status" class="status">Loading LIFF...</div>
 
@@ -149,7 +149,7 @@
       const LIFF_ID = "2010072810-4TWyKraj";
       const MESSAGE_ENDPOINT = "flex-message.json";
       const params = new URLSearchParams(window.location.search);
-      const shouldAutoShare = params.get("auto") === "1";
+      const shouldAutoShare = params.get("auto") !== "0";
 
       const statusEl = document.querySelector("#status");
       const shareButton = document.querySelector("#shareButton");
@@ -228,7 +228,7 @@
             return;
           }
 
-          setStatus("Ready.");
+          setStatus(shouldAutoShare ? "Opening picker..." : "Ready.");
           shareButton.disabled = false;
 
           if (shouldAutoShare) {

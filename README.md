@@ -63,16 +63,16 @@ https://YOUR_GITHUB_USER.github.io/line-liff-flex-test/
 
 Use that full URL as the LIFF endpoint URL in the LINE Developers Console.
 
-Then use these URLs from the Airbnb debug button:
+Then use this URL from the Airbnb debug button. The picker opens automatically after LIFF init/login:
 
 ```text
 https://liff.line.me/2010072810-4TWyKraj
 ```
 
-or:
+Use this manual mode URL if you want to land on the test page first:
 
 ```text
-https://liff.line.me/2010072810-4TWyKraj?auto=1
+https://liff.line.me/2010072810-4TWyKraj?auto=0
 ```
 
 ### Alternative: Vercel / Netlify / Cloudflare Pages
@@ -133,16 +133,16 @@ Use LIFF ID:
 
 Deploy this app to an HTTPS host, then configure the LIFF endpoint URL to that deployed root URL.
 
-Use these test URLs from the Airbnb debug button:
+Use this test URL from the Airbnb debug button. The picker opens automatically after LIFF init/login:
 
 ```text
 https://liff.line.me/2010072810-4TWyKraj
 ```
 
-or, to attempt opening the picker immediately after LIFF init/login:
+Use this manual mode URL if you want to land on the test page first:
 
 ```text
-https://liff.line.me/2010072810-4TWyKraj?auto=1
+https://liff.line.me/2010072810-4TWyKraj?auto=0
 ```
 
 ## Notes
