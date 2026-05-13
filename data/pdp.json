@@ -1,0 +1,403 @@
+{
+  "type": "bubble",
+  "hero": {
+    "type": "image",
+    "url": "https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440",
+    "size": "full",
+    "aspectRatio": "20:13",
+    "aspectMode": "cover",
+    "action": {
+      "type": "uri",
+      "uri": "https://line.me/"
+    }
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "baseline",
+        "margin": "none",
+        "contents": [
+          {
+            "type": "text",
+            "text": "軽井沢追分 ｜森の中の1棟貸切別荘|プライベートガーデン｜1bedroom",
+            "size": "xl",
+            "weight": "bold",
+            "align": "center",
+            "wrap": true
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "md",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
+              {
+                "type": "text",
+                "text": "長野県軽井沢町のまるまる貸切の一軒家",
+                "wrap": false,
+                "color": "#666666",
+                "size": "sm",
+                "align": "center"
+              },
+              {
+                "type": "text",
+                "text": "ゲスト5人・寝室1・ベッド3・バスルーム1・64m2",
+                "size": "sm",
+                "color": "#666666",
+                "align": "center"
+              }
+            ],
+            "margin": "sm"
+          }
+        ],
+        "paddingBottom": "lg"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "4.92",
+                "align": "center",
+                "size": "lg",
+                "weight": "bold"
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                  {
+                    "type": "icon",
+                    "url": "https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/star%20(1).png",
+                    "size": "9px"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/star%20(1).png",
+                    "size": "9px"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/star%20(1).png",
+                    "size": "9px"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/star%20(1).png",
+                    "size": "9px"
+                  },
+                  {
+                    "type": "icon",
+                    "url": "https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/star%20(1).png",
+                    "size": "9px"
+                  }
+                ],
+                "alignItems": "center",
+                "justifyContent": "center",
+                "spacing": "xs"
+              }
+            ]
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "image",
+                "url": "https://github.com/okcomp/images-temp/blob/main/Untitled.jpg?raw=true",
+                "aspectMode": "fit",
+                "size": "lg",
+                "margin": "none",
+                "align": "center",
+                "offsetStart": "none"
+              }
+            ],
+            "margin": "none",
+            "spacing": "none",
+            "width": "100px"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "text",
+                "text": "114件",
+                "size": "md",
+                "weight": "bold"
+              },
+              {
+                "type": "text",
+                "text": "レビュー",
+                "size": "xs",
+                "offsetEnd": "none",
+                "offsetBottom": "xs"
+              }
+            ],
+            "justifyContent": "center",
+            "alignItems": "center",
+            "spacing": "none"
+          }
+        ],
+        "justifyContent": "space-between",
+        "alignItems": "center",
+        "height": "40px",
+        "margin": "md"
+      },
+      {
+        "type": "separator",
+        "margin": "xxl"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                  {
+                    "type": "icon",
+                    "url": "https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/train%20(1).png",
+                    "offsetTop": "xs",
+                    "offsetEnd": "none"
+                  },
+                  {
+                    "type": "text",
+                    "text": "信濃追分駅に近⁠い",
+                    "margin": "sm",
+                    "size": "sm"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                  {
+                    "type": "icon",
+                    "url": "https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/kettle%20(1).png",
+                    "offsetTop": "xs",
+                    "offsetEnd": "none"
+                  },
+                  {
+                    "type": "text",
+                    "text": "コーヒー抽出器具",
+                    "margin": "sm",
+                    "size": "sm"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                  {
+                    "type": "icon",
+                    "url": "https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/snow%20(1).png",
+                    "offsetTop": "xs",
+                    "offsetEnd": "none"
+                  },
+                  {
+                    "type": "text",
+                    "text": "エアコン",
+                    "margin": "sm",
+                    "size": "sm"
+                  }
+                ]
+              }
+            ],
+            "spacing": "lg"
+          },
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                  {
+                    "type": "icon",
+                    "url": "https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/car%20(1).png",
+                    "offsetTop": "xs",
+                    "offsetEnd": "none"
+                  },
+                  {
+                    "type": "text",
+                    "text": "無料駐車スペース",
+                    "margin": "sm",
+                    "size": "sm"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                  {
+                    "type": "icon",
+                    "url": "https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/washer%20(1).png",
+                    "offsetTop": "xs",
+                    "offsetEnd": "none"
+                  },
+                  {
+                    "type": "text",
+                    "text": "洗濯機・乾⁠燥⁠機",
+                    "margin": "sm",
+                    "size": "sm"
+                  }
+                ]
+              },
+              {
+                "type": "box",
+                "layout": "baseline",
+                "contents": [
+                  {
+                    "type": "icon",
+                    "url": "https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/key%20(1).png",
+                    "offsetTop": "xs",
+                    "offsetEnd": "none"
+                  },
+                  {
+                    "type": "text",
+                    "text": "スムーズなチ⁠ェ⁠ッ⁠ク⁠イ⁠ン⁠体⁠験",
+                    "margin": "sm",
+                    "size": "sm"
+                  }
+                ]
+              }
+            ],
+            "margin": "lg",
+            "spacing": "lg"
+          }
+        ],
+        "margin": "xxl",
+        "paddingBottom": "lg"
+      }
+    ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "horizontal",
+    "spacing": "none",
+    "contents": [
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "text",
+            "text": "¥131,907",
+            "weight": "bold",
+            "decoration": "underline",
+            "size": "lg"
+          },
+          {
+            "type": "text",
+            "contents": [
+              {
+                "type": "span",
+                "text": "（5泊）",
+                "color": "#666666",
+                "size": "sm"
+              },
+              {
+                "type": "span",
+                "text": "・6月15日〜20日",
+                "color": "#666666",
+                "size": "sm"
+              }
+            ],
+            "size": "md",
+            "margin": "sm"
+          },
+          {
+            "type": "box",
+            "layout": "baseline",
+            "contents": [
+              {
+                "type": "text",
+                "text": "本日のお支払いは¥0",
+                "offsetStart": "none",
+                "margin": "md",
+                "size": "sm"
+              }
+            ],
+            "cornerRadius": "lg",
+            "backgroundColor": "#F0F0F0",
+            "borderWidth": "none",
+            "width": "145px",
+            "margin": "sm",
+            "offsetStart": "none",
+            "paddingAll": "none",
+            "spacing": "none",
+            "paddingEnd": "none"
+          }
+        ],
+        "offsetTop": "sm",
+        "offsetBottom": "md"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+              {
+                "type": "button",
+                "style": "primary",
+                "height": "sm",
+                "action": {
+                  "type": "uri",
+                  "label": "予約",
+                  "uri": "https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1",
+                  "altUri": {
+                    "desktop": "https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1"
+                  }
+                },
+                "margin": "none",
+                "color": "#FF385C"
+              }
+            ],
+            "backgroundColor": "#FF385C",
+            "cornerRadius": "xxl"
+          }
+        ],
+        "width": "80px",
+        "justifyContent": "center",
+        "cornerRadius": "xxl"
+      }
+    ],
+    "flex": 0,
+    "paddingAll": "xxl",
+    "justifyContent": "flex-start",
+    "paddingTop": "md"
+  },
+  "styles": {
+    "footer": {
+      "separator": true
+    }
+  }
+}

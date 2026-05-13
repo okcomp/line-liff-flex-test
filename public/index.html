@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LINE LIFF Share Target Picker Test</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #f7f7f7;
+        color: #1f1f1f;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+      }
+
+      main {
+        width: min(100%, 520px);
+        background: #ffffff;
+        border: 1px solid #dddddd;
+        border-radius: 8px;
+        padding: 24px;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: 22px;
+        line-height: 1.25;
+      }
+
+      p {
+        margin: 0 0 16px;
+        color: #5f5f5f;
+        line-height: 1.45;
+      }
+
+      .controls {
+        display: grid;
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      button,
+      a.button {
+        appearance: none;
+        border: 0;
+        border-radius: 6px;
+        background: #06c755;
+        color: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 18px;
+        font-size: 16px;
+        font-weight: 700;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      button.secondary {
+        background: #eeeeee;
+        color: #222222;
+      }
+
+      button:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+
+      dl {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 8px 12px;
+        margin: 18px 0 0;
+        font-size: 13px;
+      }
+
+      dt {
+        color: #777777;
+      }
+
+      dd {
+        margin: 0;
+        overflow-wrap: anywhere;
+      }
+
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        background: #f3f3f3;
+        border-radius: 6px;
+        margin: 18px 0 0;
+        padding: 12px;
+        max-height: 240px;
+        overflow: auto;
+        font-size: 12px;
+      }
+
+      .status {
+        min-height: 22px;
+        color: #1f1f1f;
+        font-weight: 600;
+      }
+
+      .error {
+        color: #b00020;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Airbnb listing LINE share test</h1>
+      <p>Use this page to open LINE's share target picker and send the PDP Flex Message to a selected friend.</p>
+
+      <div id="status" class="status">Loading LIFF...</div>
+
+      <div class="controls">
+        <button id="shareButton" disabled>Share to LINE friend</button>
+        <button id="closeButton" class="secondary" type="button">Close LIFF</button>
+      </div>
+
+      <dl>
+        <dt>LIFF ID</dt>
+        <dd id="liffId"></dd>
+        <dt>Context</dt>
+        <dd id="context">Unknown</dd>
+        <dt>Endpoint</dt>
+        <dd id="endpoint"></dd>
+      </dl>
+
+      <pre id="result" aria-live="polite"></pre>
+    </main>
+
+    <script>
+      const LIFF_ID = "2010072810-4TWyKraj";
+      const MESSAGE_ENDPOINT = "/flex-message.json";
+      const params = new URLSearchParams(window.location.search);
+      const shouldAutoShare = params.get("auto") === "1";
+
+      const statusEl = document.querySelector("#status");
+      const shareButton = document.querySelector("#shareButton");
+      const closeButton = document.querySelector("#closeButton");
+      const resultEl = document.querySelector("#result");
+
+      document.querySelector("#liffId").textContent = LIFF_ID;
+      document.querySelector("#endpoint").textContent = MESSAGE_ENDPOINT;
+
+      function setStatus(message, isError = false) {
+        statusEl.textContent = message;
+        statusEl.classList.toggle("error", isError);
+      }
+
+      function showResult(value) {
+        resultEl.textContent =
+          typeof value === "string" ? value : JSON.stringify(value, null, 2);
+      }
+
+      async function fetchFlexMessage() {
+        const response = await fetch(MESSAGE_ENDPOINT, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`Failed to load Flex Message: HTTP ${response.status}`);
+        }
+        return response.json();
+      }
+
+      async function shareListing() {
+        shareButton.disabled = true;
+        setStatus("Opening LINE target picker...");
+
+        try {
+          if (!liff.isApiAvailable("shareTargetPicker")) {
+            throw new Error("shareTargetPicker is not available in this LIFF context.");
+          }
+
+          const message = await fetchFlexMessage();
+          showResult(message);
+
+          const result = await liff.shareTargetPicker([message], {
+            isMultiple: false
+          });
+
+          if (result) {
+            setStatus("Message sent or picker completed.");
+            showResult(result);
+          } else {
+            setStatus("Picker closed without a result.");
+            showResult("The user may have cancelled the share flow.");
+          }
+        } catch (error) {
+          setStatus(error.message || String(error), true);
+          showResult(error.stack || error.message || String(error));
+        } finally {
+          shareButton.disabled = false;
+        }
+      }
+
+      async function init() {
+        try {
+          await liff.init({ liffId: LIFF_ID });
+
+          document.querySelector("#context").textContent = liff.isInClient()
+            ? "LINE app LIFF browser"
+            : "External browser";
+
+          if (!liff.isLoggedIn()) {
+            setStatus("Redirecting to LINE login...");
+            liff.login({ redirectUri: window.location.href });
+            return;
+          }
+
+          if (!liff.isApiAvailable("shareTargetPicker")) {
+            setStatus("shareTargetPicker is unavailable here.", true);
+            shareButton.disabled = true;
+            return;
+          }
+
+          setStatus("Ready.");
+          shareButton.disabled = false;
+
+          if (shouldAutoShare) {
+            await shareListing();
+          }
+        } catch (error) {
+          setStatus(error.message || String(error), true);
+          showResult(error.stack || error.message || String(error));
+        }
+      }
+
+      shareButton.addEventListener("click", shareListing);
+      closeButton.addEventListener("click", () => {
+        if (window.liff && liff.isInClient()) {
+          liff.closeWindow();
+        } else {
+          window.close();
+        }
+      });
+
+      init();
+    </script>
+  </body>
+</html>
