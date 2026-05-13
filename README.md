@@ -150,5 +150,6 @@ https://liff.line.me/2010072810-4TWyKraj?auto=0
 - The Flex JSON source is `data/pdp.json`.
 - The page displays the current LINE user's display name, user ID, profile image, and email when those scopes are available.
 - Email requires the LINE Login channel and LIFF app to include the email scope and requires the user to authorize it.
+- If email is unavailable even with the email scope enabled, open `?auto=0` and check the ID token status and claim list. The current login token may need re-authorization, or the LINE account may not have a registered and verified email address.
 - This app intentionally does not use LINE Messaging API or LINE iOS SDK.
 - The receiver is selected by the LINE user in the target picker.

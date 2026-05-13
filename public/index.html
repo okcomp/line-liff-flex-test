@@ -180,6 +180,10 @@
           <dd id="userId">Loading...</dd>
           <dt>Email</dt>
           <dd id="email">Loading...</dd>
+          <dt>ID token</dt>
+          <dd id="idTokenStatus">Loading...</dd>
+          <dt>Claims</dt>
+          <dd id="idTokenClaims">Loading...</dd>
         </dl>
       </section>
 
@@ -200,6 +204,8 @@
       const displayNameEl = document.querySelector("#displayName");
       const userIdEl = document.querySelector("#userId");
       const emailEl = document.querySelector("#email");
+      const idTokenStatusEl = document.querySelector("#idTokenStatus");
+      const idTokenClaimsEl = document.querySelector("#idTokenClaims");
 
       document.querySelector("#liffId").textContent = LIFF_ID;
       document.querySelector("#endpoint").textContent = MESSAGE_ENDPOINT;
@@ -235,9 +241,19 @@
 
         const idToken = liff.getDecodedIDToken();
         setUserField(
+          idTokenStatusEl,
+          idToken ? (idToken.email ? "Present, email claim included" : "Present, no email claim") : null,
+          "Unavailable"
+        );
+        setUserField(
+          idTokenClaimsEl,
+          idToken ? Object.keys(idToken).sort().join(", ") : null,
+          "Unavailable"
+        );
+        setUserField(
           emailEl,
           idToken?.email,
-          "Unavailable. Enable email scope and re-authorize this LIFF app."
+          "Unavailable. Check token claims, then re-authorize or verify account email."
         );
       }
 
