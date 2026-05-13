@@ -83,7 +83,7 @@
 
       .user-card {
         display: grid;
-        grid-template-columns: 48px 1fr;
+        grid-template-columns: 1fr;
         gap: 12px;
         align-items: center;
         margin-top: 18px;
@@ -102,8 +102,12 @@
       }
 
       .user-card dl {
-        grid-template-columns: 92px 1fr;
+        grid-template-columns: minmax(92px, max-content) minmax(0, 1fr);
         margin: 0;
+      }
+
+      .user-card.has-avatar {
+        grid-template-columns: 48px minmax(0, 1fr);
       }
 
       .avatar[hidden] {
@@ -233,6 +237,7 @@
           if (profile.pictureUrl) {
             profileImageEl.src = profile.pictureUrl;
             profileImageEl.hidden = false;
+            profileImageEl.closest(".user-card").classList.add("has-avatar");
           }
         } catch (error) {
           setUserField(displayNameEl, null, "Profile unavailable");
