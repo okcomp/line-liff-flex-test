@@ -275,7 +275,7 @@
           if (result) {
             setStatus("LINEでシェアしました。", "done");
           } else {
-            setStatus("シェアをキャンセルしました。", "ready");
+            setStatus("もう一度シェアできます。", "ready");
           }
         } catch (error) {
           setStatus(error.message || String(error), "error");
