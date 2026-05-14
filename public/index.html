@@ -274,6 +274,9 @@
 
           if (result) {
             setStatus("LINEでシェアしました。", "done");
+            if (liff.isInClient()) {
+              liff.closeWindow();
+            }
           } else {
             setStatus("もう一度シェアできます。", "ready");
           }
