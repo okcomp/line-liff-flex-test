@@ -241,7 +241,10 @@
       const statusTextEl = document.querySelector("#statusText");
       const shareButton = document.querySelector("#shareButton");
       const closeButton = document.querySelector("#closeButton");
-      const flexMessagePromise = fetchFlexMessage();
+      let flexMessagePromise;
+
+      const transientErrorPattern =
+        /Load failed|Failed to fetch|NetworkError|network|timeout|timed out/i;
 
       function setStatus(message, tone = "loading") {
         statusTextEl.textContent = message;
@@ -250,15 +253,76 @@
         statusEl.classList.toggle("error", tone === "error");
       }
 
+      function getErrorMessage(error) {
+        if (error instanceof Error && error.message) {
+          return error.message;
+        }
+        return String(error);
+      }
+
+      function isTransientError(error) {
+        return transientErrorPattern.test(getErrorMessage(error));
+      }
+
+      function sleep(ms) {
+        return new Promise((resolve) => {
+          window.setTimeout(resolve, ms);
+        });
+      }
+
+      async function withRetry(task, { attempts = 2, delayMs = 350 } = {}) {
+        let lastError;
+
+        for (let attempt = 1; attempt <= attempts; attempt += 1) {
+          try {
+            return await task();
+          } catch (error) {
+            lastError = error;
+
+            if (attempt === attempts || !isTransientError(error)) {
+              break;
+            }
+
+            await sleep(delayMs * attempt);
+          }
+        }
+
+        throw lastError;
+      }
+
+      async function waitForLineClientReady() {
+        await Promise.race([
+          new Promise((resolve) => {
+            window.requestAnimationFrame(resolve);
+          }),
+          sleep(80)
+        ]);
+        await sleep(120);
+      }
+
       async function fetchFlexMessage() {
-        const response = await fetch(MESSAGE_ENDPOINT, { cache: "no-store" });
+        const response = await fetch(MESSAGE_ENDPOINT);
         if (!response.ok) {
           throw new Error(`メッセージを読み込めません (${response.status})`);
         }
         return response.json();
       }
 
-      async function shareListing() {
+      async function loadFlexMessage() {
+        if (!flexMessagePromise) {
+          flexMessagePromise = withRetry(fetchFlexMessage, {
+            attempts: 3,
+            delayMs: 300
+          }).catch((error) => {
+            flexMessagePromise = undefined;
+            throw error;
+          });
+        }
+
+        return flexMessagePromise;
+      }
+
+      async function shareListing({ auto = false } = {}) {
         shareButton.disabled = true;
         setStatus("LINEを開いています...", "loading");
 
@@ -267,10 +331,17 @@
             throw new Error("この環境ではLINEシェアを利用できません。");
           }
 
-          const message = await flexMessagePromise;
-          const result = await liff.shareTargetPicker([message], {
-            isMultiple: false
-          });
+          const message = await loadFlexMessage();
+          const result = await withRetry(
+            () =>
+              liff.shareTargetPicker([message], {
+                isMultiple: false
+              }),
+            {
+              attempts: auto ? 2 : 1,
+              delayMs: 500
+            }
+          );
 
           if (result) {
             setStatus("LINEでシェアしました。", "done");
@@ -281,7 +352,13 @@
             setStatus("もう一度シェアできます。", "ready");
           }
         } catch (error) {
-          setStatus(error.message || String(error), "error");
+          console.warn("LINE share failed", error);
+          setStatus(
+            isTransientError(error)
+              ? "もう一度シェアできます。"
+              : getErrorMessage(error),
+            isTransientError(error) ? "ready" : "error"
+          );
         } finally {
           shareButton.disabled = false;
         }
@@ -289,7 +366,10 @@
 
       async function init() {
         try {
-          await liff.init({ liffId: LIFF_ID });
+          await withRetry(() => liff.init({ liffId: LIFF_ID }), {
+            attempts: 2,
+            delayMs: 500
+          });
 
           if (!liff.isLoggedIn()) {
             setStatus("LINEログインを開いています...", "loading");
@@ -306,14 +386,18 @@
           setStatus(shouldAutoShare ? "LINEを開いています..." : "シェアできます。", "ready");
 
           if (shouldAutoShare) {
-            await shareListing();
+            await waitForLineClientReady();
+            await shareListing({ auto: true });
           }
         } catch (error) {
-          setStatus(error.message || String(error), "error");
+          console.warn("LIFF init failed", error);
+          setStatus(getErrorMessage(error), "error");
         }
       }
 
-      shareButton.addEventListener("click", shareListing);
+      shareButton.addEventListener("click", () => {
+        shareListing();
+      });
       closeButton.addEventListener("click", () => {
         if (window.liff && liff.isInClient()) {
           liff.closeWindow();
