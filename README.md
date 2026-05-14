@@ -5,7 +5,8 @@ Production-style LIFF share page for testing `shareTargetPicker()` with a Flex M
 The real LINE test needs a public HTTPS URL. The `public/` directory is a complete static site:
 
 - `public/index.html` is the LIFF share page.
-- `public/flex-message.json` is the static HTTPS endpoint that returns the full Flex Message.
+- `public/index.html` embeds the full Flex Message so the share flow does not need an extra runtime fetch.
+- `public/flex-message.json` is kept as a reference/debug copy of the same Flex Message.
 - `data/pdp.json` stores the source Flex bubble copied from `p2 card.json`.
 
 Deploy `public/` to any HTTPS static host, then set that deployed URL as the LIFF endpoint URL in the LINE Developers Console.
@@ -111,7 +112,7 @@ https://line-liff-flex-test.example.pages.dev/
 ## Endpoints
 
 - `GET /` serves the LIFF test page.
-- `GET flex-message.json` returns the full Flex Message from the same directory as the LIFF page:
+- `GET flex-message.json` returns a reference copy of the full Flex Message:
 
 ```json
 {
