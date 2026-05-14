@@ -3,15 +3,17 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LINE LIFF Share Target Picker Test</title>
+    <title>Share this stay on LINE</title>
+    <link rel="preconnect" href="https://static.line-scdn.net" />
+    <link rel="preload" href="flex-message.json" as="fetch" type="application/json" crossorigin="anonymous" />
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
       :root {
         color-scheme: light;
         font-family:
           -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: #f7f7f7;
-        color: #1f1f1f;
+        background: #f7f7f5;
+        color: #222222;
       }
 
       * {
@@ -27,39 +29,143 @@
       }
 
       main {
-        width: min(100%, 520px);
+        width: min(100%, 480px);
+      }
+
+      .share-panel {
+        overflow: hidden;
         background: #ffffff;
         border: 1px solid #dddddd;
         border-radius: 8px;
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.12);
+      }
+
+      .cover {
+        display: block;
+        width: 100%;
+        aspect-ratio: 20 / 13;
+        object-fit: cover;
+        background: #eeeeee;
+      }
+
+      .content {
         padding: 24px;
-        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+      }
+
+      .kicker {
+        margin: 0 0 8px;
+        color: #717171;
+        font-size: 13px;
+        font-weight: 700;
       }
 
       h1 {
-        margin: 0 0 8px;
-        font-size: 22px;
-        line-height: 1.25;
+        margin: 0;
+        font-size: 28px;
+        line-height: 1.15;
+        letter-spacing: 0;
       }
 
-      p {
-        margin: 0 0 16px;
+      .listing {
+        margin: 8px 0 0;
         color: #5f5f5f;
+        font-size: 15px;
         line-height: 1.45;
       }
 
-      .controls {
-        display: grid;
-        gap: 12px;
-        margin-top: 20px;
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 24px;
+        margin: 18px 0 0;
+        color: #222222;
+        font-size: 14px;
+        font-weight: 700;
       }
 
-      button,
-      a.button {
+      .spinner {
+        width: 16px;
+        height: 16px;
+        border: 2px solid #dddddd;
+        border-top-color: #ff385c;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+
+      .status.ready .spinner,
+      .status.error .spinner,
+      .status.done .spinner {
+        animation: none;
+        border-color: currentColor;
+      }
+
+      .status.error {
+        color: #b00020;
+      }
+
+      .status.done {
+        color: #008a05;
+      }
+
+      .details {
+        margin-top: 20px;
+        padding: 16px;
+        background: #f7f7f7;
+        border: 1px solid #ebebeb;
+        border-radius: 8px;
+      }
+
+      .details-title {
+        margin: 0;
+        font-size: 17px;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      .details-copy {
+        margin: 6px 0 0;
+        color: #5f5f5f;
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .metric {
+        min-width: 0;
+      }
+
+      .metric-label {
+        margin: 0 0 3px;
+        color: #717171;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .metric-value {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+      }
+
+      .actions {
+        display: grid;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      button {
         appearance: none;
         border: 0;
-        border-radius: 6px;
-        background: #06c755;
-        color: #ffffff;
+        border-radius: 8px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -67,8 +173,12 @@
         padding: 0 18px;
         font-size: 16px;
         font-weight: 700;
-        text-decoration: none;
         cursor: pointer;
+      }
+
+      button.primary {
+        background: #ff385c;
+        color: #ffffff;
       }
 
       button.secondary {
@@ -81,117 +191,58 @@
         opacity: 0.55;
       }
 
-      .user-card {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 12px;
-        align-items: center;
-        margin-top: 18px;
-        padding: 12px;
-        background: #f6f6f6;
-        border: 1px solid #e4e4e4;
-        border-radius: 8px;
-      }
-
-      .avatar {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        background: #d8d8d8;
-        object-fit: cover;
-      }
-
-      .user-card dl {
-        grid-template-columns: minmax(92px, max-content) minmax(0, 1fr);
-        margin: 0;
-      }
-
-      .user-card.has-avatar {
-        grid-template-columns: 48px minmax(0, 1fr);
-      }
-
-      .avatar[hidden] {
-        display: none;
-      }
-
-      dl {
-        display: grid;
-        grid-template-columns: 120px 1fr;
-        gap: 8px 12px;
-        margin: 18px 0 0;
-        font-size: 13px;
-      }
-
-      dt {
-        color: #777777;
-      }
-
-      dd {
-        margin: 0;
-        overflow-wrap: anywhere;
-      }
-
-      pre {
-        white-space: pre-wrap;
-        overflow-wrap: anywhere;
-        background: #f3f3f3;
-        border-radius: 6px;
-        margin: 18px 0 0;
-        padding: 12px;
-        max-height: 240px;
-        overflow: auto;
-        font-size: 12px;
-      }
-
-      .status {
-        min-height: 22px;
-        color: #1f1f1f;
-        font-weight: 600;
-      }
-
-      .error {
-        color: #b00020;
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
       }
     </style>
   </head>
   <body>
     <main>
-      <h1>Airbnb listing LINE share test</h1>
-      <p>This page opens LINE's share target picker and sends the PDP Flex Message to a selected friend.</p>
+      <section class="share-panel" aria-label="Share this stay">
+        <img
+          class="cover"
+          src="https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440"
+          fetchpriority="low"
+          alt=""
+        />
 
-      <div id="status" class="status">Loading LIFF...</div>
+        <div class="content">
+          <p class="kicker">LINE</p>
+          <h1>Share this stay</h1>
+          <p class="listing">Send a rich LINE card for this Karuizawa listing.</p>
 
-      <div class="controls">
-        <button id="shareButton" disabled>Share to LINE friend</button>
-        <button id="closeButton" class="secondary" type="button">Close LIFF</button>
-      </div>
+          <div id="status" class="status" aria-live="polite">
+            <span class="spinner" aria-hidden="true"></span>
+            <span id="statusText">Preparing share...</span>
+          </div>
 
-      <dl>
-        <dt>LIFF ID</dt>
-        <dd id="liffId"></dd>
-        <dt>Context</dt>
-        <dd id="context">Unknown</dd>
-        <dt>Endpoint</dt>
-        <dd id="endpoint"></dd>
-      </dl>
+          <section class="details" aria-label="Listing details">
+            <p class="details-title">軽井沢町の一軒家</p>
+            <p class="details-copy">軽井沢追分 ｜森の中の1棟貸切別荘｜寝室1・ベッド3・バスルーム1</p>
+            <div class="metrics">
+              <div class="metric">
+                <p class="metric-label">Rating</p>
+                <p class="metric-value">4.92</p>
+              </div>
+              <div class="metric">
+                <p class="metric-label">Dates</p>
+                <p class="metric-value">6月15日-20日</p>
+              </div>
+              <div class="metric">
+                <p class="metric-label">Total</p>
+                <p class="metric-value">¥131,907</p>
+              </div>
+            </div>
+          </section>
 
-      <section class="user-card" aria-label="Current LINE user">
-        <img id="profileImage" class="avatar" alt="" hidden />
-        <dl>
-          <dt>Display name</dt>
-          <dd id="displayName">Loading...</dd>
-          <dt>User ID</dt>
-          <dd id="userId">Loading...</dd>
-          <dt>Email</dt>
-          <dd id="email">Loading...</dd>
-          <dt>ID token</dt>
-          <dd id="idTokenStatus">Loading...</dd>
-          <dt>Claims</dt>
-          <dd id="idTokenClaims">Loading...</dd>
-        </dl>
+          <div class="actions">
+            <button id="shareButton" class="primary" disabled>Share on LINE</button>
+            <button id="closeButton" class="secondary" type="button">Close</button>
+          </div>
+        </div>
       </section>
-
-      <pre id="result" aria-live="polite"></pre>
     </main>
 
     <script>
@@ -201,101 +252,47 @@
       const shouldAutoShare = params.get("auto") !== "0";
 
       const statusEl = document.querySelector("#status");
+      const statusTextEl = document.querySelector("#statusText");
       const shareButton = document.querySelector("#shareButton");
       const closeButton = document.querySelector("#closeButton");
-      const resultEl = document.querySelector("#result");
-      const profileImageEl = document.querySelector("#profileImage");
-      const displayNameEl = document.querySelector("#displayName");
-      const userIdEl = document.querySelector("#userId");
-      const emailEl = document.querySelector("#email");
-      const idTokenStatusEl = document.querySelector("#idTokenStatus");
-      const idTokenClaimsEl = document.querySelector("#idTokenClaims");
+      const flexMessagePromise = fetchFlexMessage();
 
-      document.querySelector("#liffId").textContent = LIFF_ID;
-      document.querySelector("#endpoint").textContent = MESSAGE_ENDPOINT;
-
-      function setStatus(message, isError = false) {
-        statusEl.textContent = message;
-        statusEl.classList.toggle("error", isError);
-      }
-
-      function showResult(value) {
-        resultEl.textContent =
-          typeof value === "string" ? value : JSON.stringify(value, null, 2);
-      }
-
-      function setUserField(element, value, fallback = "Unavailable") {
-        element.textContent = value || fallback;
-      }
-
-      async function loadCurrentUser() {
-        try {
-          const profile = await liff.getProfile();
-          setUserField(displayNameEl, profile.displayName);
-          setUserField(userIdEl, profile.userId);
-
-          if (profile.pictureUrl) {
-            profileImageEl.src = profile.pictureUrl;
-            profileImageEl.hidden = false;
-            profileImageEl.closest(".user-card").classList.add("has-avatar");
-          }
-        } catch (error) {
-          setUserField(displayNameEl, null, "Profile unavailable");
-          setUserField(userIdEl, null, "Profile unavailable");
-        }
-
-        const idToken = liff.getDecodedIDToken();
-        setUserField(
-          idTokenStatusEl,
-          idToken ? (idToken.email ? "Present, email claim included" : "Present, no email claim") : null,
-          "Unavailable"
-        );
-        setUserField(
-          idTokenClaimsEl,
-          idToken ? Object.keys(idToken).sort().join(", ") : null,
-          "Unavailable"
-        );
-        setUserField(
-          emailEl,
-          idToken?.email,
-          "Unavailable. Check token claims, then re-authorize or verify account email."
-        );
+      function setStatus(message, tone = "loading") {
+        statusTextEl.textContent = message;
+        statusEl.classList.toggle("ready", tone === "ready");
+        statusEl.classList.toggle("done", tone === "done");
+        statusEl.classList.toggle("error", tone === "error");
       }
 
       async function fetchFlexMessage() {
         const response = await fetch(MESSAGE_ENDPOINT, { cache: "no-store" });
         if (!response.ok) {
-          throw new Error(`Failed to load Flex Message: HTTP ${response.status}`);
+          throw new Error(`Message unavailable (${response.status})`);
         }
         return response.json();
       }
 
       async function shareListing() {
         shareButton.disabled = true;
-        setStatus("Opening LINE target picker...");
+        setStatus("Opening LINE...", "loading");
 
         try {
           if (!liff.isApiAvailable("shareTargetPicker")) {
-            throw new Error("shareTargetPicker is not available in this LIFF context.");
+            throw new Error("LINE sharing is unavailable in this context.");
           }
 
-          const message = await fetchFlexMessage();
-          showResult(message);
-
+          const message = await flexMessagePromise;
           const result = await liff.shareTargetPicker([message], {
             isMultiple: false
           });
 
           if (result) {
-            setStatus("Message sent or picker completed.");
-            showResult(result);
+            setStatus("Shared on LINE.", "done");
           } else {
-            setStatus("Picker closed without a result.");
-            showResult("The user may have cancelled the share flow.");
+            setStatus("Share canceled.", "ready");
           }
         } catch (error) {
-          setStatus(error.message || String(error), true);
-          showResult(error.stack || error.message || String(error));
+          setStatus(error.message || String(error), "error");
         } finally {
           shareButton.disabled = false;
         }
@@ -305,33 +302,25 @@
         try {
           await liff.init({ liffId: LIFF_ID });
 
-          document.querySelector("#context").textContent = liff.isInClient()
-            ? "LINE app LIFF browser"
-            : "External browser";
-
           if (!liff.isLoggedIn()) {
-            setStatus("Redirecting to LINE login...");
+            setStatus("Opening LINE login...", "loading");
             liff.login({ redirectUri: window.location.href });
             return;
           }
 
-          await loadCurrentUser();
-
           if (!liff.isApiAvailable("shareTargetPicker")) {
-            setStatus("shareTargetPicker is unavailable here.", true);
-            shareButton.disabled = true;
+            setStatus("LINE sharing is unavailable.", "error");
             return;
           }
 
-          setStatus(shouldAutoShare ? "Opening picker..." : "Ready.");
           shareButton.disabled = false;
+          setStatus(shouldAutoShare ? "Opening LINE..." : "Ready to share.", "ready");
 
           if (shouldAutoShare) {
             await shareListing();
           }
         } catch (error) {
-          setStatus(error.message || String(error), true);
-          showResult(error.stack || error.message || String(error));
+          setStatus(error.message || String(error), "error");
         }
       }
 

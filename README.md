@@ -1,11 +1,12 @@
-# LINE LIFF Flex Message Share Test
+# LINE LIFF Share Page
 
-Minimal test app for LIFF `shareTargetPicker()` using the Flex bubble from `data/pdp.json`.
+Production-style LIFF share page for testing `shareTargetPicker()` with a Flex Message listing card.
 
 The real LINE test needs a public HTTPS URL. The `public/` directory is a complete static site:
 
-- `public/index.html` is the LIFF page.
+- `public/index.html` is the LIFF share page.
 - `public/flex-message.json` is the static HTTPS endpoint that returns the full Flex Message.
+- `data/pdp.json` stores the source Flex bubble copied from `p2 card.json`.
 
 Deploy `public/` to any HTTPS static host, then set that deployed URL as the LIFF endpoint URL in the LINE Developers Console.
 
@@ -63,7 +64,7 @@ https://YOUR_GITHUB_USER.github.io/line-liff-flex-test/
 
 Use that full URL as the LIFF endpoint URL in the LINE Developers Console.
 
-Then use this URL from the Airbnb debug button. The picker opens automatically after LIFF init/login:
+Then use this URL from the native app share entry. The picker opens automatically after LIFF init/login:
 
 ```text
 https://liff.line.me/2010072810-4TWyKraj
@@ -133,7 +134,7 @@ Use LIFF ID:
 
 Deploy this app to an HTTPS host, then configure the LIFF endpoint URL to that deployed root URL.
 
-Use this test URL from the Airbnb debug button. The picker opens automatically after LIFF init/login:
+Use this test URL from the native app share entry. The picker opens automatically after LIFF init/login:
 
 ```text
 https://liff.line.me/2010072810-4TWyKraj
@@ -147,9 +148,7 @@ https://liff.line.me/2010072810-4TWyKraj?auto=0
 
 ## Notes
 
-- The Flex JSON source is `data/pdp.json`.
-- The page displays the current LINE user's display name, user ID, profile image, and email when those scopes are available.
-- Email requires the LINE Login channel and LIFF app to include the email scope and requires the user to authorize it.
-- If email is unavailable even with the email scope enabled, open `?auto=0` and check the ID token status and claim list. The current login token may need re-authorization, or the LINE account may not have a registered and verified email address.
+- The Flex JSON source is `data/pdp.json`, currently copied from `p2 card.json`.
+- The page shows listing context only; it does not display the current LINE user's account details.
 - This app intentionally does not use LINE Messaging API or LINE iOS SDK.
 - The receiver is selected by the LINE user in the target picker.
