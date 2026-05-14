@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Share this stay on LINE</title>
+    <title>LINEで宿泊先をシェア</title>
     <link rel="preconnect" href="https://static.line-scdn.net" />
     <link rel="preload" href="flex-message.json" as="fetch" type="application/json" crossorigin="anonymous" />
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
@@ -29,27 +29,11 @@
       }
 
       main {
-        width: min(100%, 480px);
+        width: min(100%, 440px);
       }
 
-      .share-panel {
-        overflow: hidden;
-        background: #ffffff;
-        border: 1px solid #dddddd;
-        border-radius: 8px;
-        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.12);
-      }
-
-      .cover {
-        display: block;
-        width: 100%;
-        aspect-ratio: 20 / 13;
-        object-fit: cover;
-        background: #eeeeee;
-      }
-
-      .content {
-        padding: 24px;
+      .page-header {
+        margin-bottom: 18px;
       }
 
       .kicker {
@@ -66,11 +50,85 @@
         letter-spacing: 0;
       }
 
-      .listing {
+      .intro {
         margin: 8px 0 0;
         color: #5f5f5f;
         font-size: 15px;
         line-height: 1.45;
+      }
+
+      .pdp-card {
+        overflow: hidden;
+        background: #ffffff;
+        border: 1px solid #dddddd;
+        border-radius: 8px;
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.1);
+      }
+
+      .cover {
+        display: block;
+        width: 100%;
+        aspect-ratio: 20 / 13;
+        object-fit: cover;
+        background: #eeeeee;
+      }
+
+      .pdp-content {
+        padding: 20px;
+      }
+
+      .pdp-title {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1.32;
+        letter-spacing: 0;
+      }
+
+      .pdp-subtitle {
+        margin: 8px 0 0;
+        color: #5f5f5f;
+        font-size: 15px;
+        line-height: 1.45;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid #ebebeb;
+      }
+
+      .metric {
+        min-width: 0;
+      }
+
+      .metric-label {
+        margin: 0 0 4px;
+        color: #717171;
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      .metric-value {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 800;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+      }
+
+      .payment-note {
+        display: inline-flex;
+        margin-top: 16px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: #f0f0f0;
+        color: #3f3f3f;
+        font-size: 14px;
+        font-weight: 700;
       }
 
       .status {
@@ -108,58 +166,10 @@
         color: #008a05;
       }
 
-      .details {
-        margin-top: 20px;
-        padding: 16px;
-        background: #f7f7f7;
-        border: 1px solid #ebebeb;
-        border-radius: 8px;
-      }
-
-      .details-title {
-        margin: 0;
-        font-size: 17px;
-        font-weight: 700;
-        line-height: 1.3;
-      }
-
-      .details-copy {
-        margin: 6px 0 0;
-        color: #5f5f5f;
-        font-size: 14px;
-        line-height: 1.45;
-      }
-
-      .metrics {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 10px;
-        margin-top: 14px;
-      }
-
-      .metric {
-        min-width: 0;
-      }
-
-      .metric-label {
-        margin: 0 0 3px;
-        color: #717171;
-        font-size: 11px;
-        font-weight: 700;
-      }
-
-      .metric-value {
-        margin: 0;
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 1.25;
-        overflow-wrap: anywhere;
-      }
-
       .actions {
         display: grid;
         gap: 10px;
-        margin-top: 22px;
+        margin-top: 18px;
       }
 
       button {
@@ -200,49 +210,51 @@
   </head>
   <body>
     <main>
-      <section class="share-panel" aria-label="Share this stay">
+      <header class="page-header">
+        <p class="kicker">LINE</p>
+        <h1>LINEで宿泊先をシェア</h1>
+        <p class="intro">友だちに送る宿泊先カードを準備しています。</p>
+      </header>
+
+      <section class="pdp-card" aria-label="宿泊先の概要">
         <img
           class="cover"
           src="https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440"
           fetchpriority="low"
           alt=""
         />
+        <div class="pdp-content">
+          <p class="pdp-title">軽井沢追分｜森の中の1棟貸切別荘</p>
+          <p class="pdp-subtitle">長野県軽井沢町のまるまる貸切の一軒家</p>
 
-        <div class="content">
-          <p class="kicker">LINE</p>
-          <h1>Share this stay</h1>
-          <p class="listing">Send a rich LINE card for this Karuizawa listing.</p>
-
-          <div id="status" class="status" aria-live="polite">
-            <span class="spinner" aria-hidden="true"></span>
-            <span id="statusText">Preparing share...</span>
-          </div>
-
-          <section class="details" aria-label="Listing details">
-            <p class="details-title">軽井沢町の一軒家</p>
-            <p class="details-copy">軽井沢追分 ｜森の中の1棟貸切別荘｜寝室1・ベッド3・バスルーム1</p>
-            <div class="metrics">
-              <div class="metric">
-                <p class="metric-label">Rating</p>
-                <p class="metric-value">4.92</p>
-              </div>
-              <div class="metric">
-                <p class="metric-label">Dates</p>
-                <p class="metric-value">6月15日-20日</p>
-              </div>
-              <div class="metric">
-                <p class="metric-label">Total</p>
-                <p class="metric-value">¥131,907</p>
-              </div>
+          <div class="metrics">
+            <div class="metric">
+              <p class="metric-label">評価</p>
+              <p class="metric-value">★ 4.92</p>
             </div>
-          </section>
-
-          <div class="actions">
-            <button id="shareButton" class="primary" disabled>Share on LINE</button>
-            <button id="closeButton" class="secondary" type="button">Close</button>
+            <div class="metric">
+              <p class="metric-label">日程</p>
+              <p class="metric-value">6月15日〜20日</p>
+            </div>
+            <div class="metric">
+              <p class="metric-label">料金</p>
+              <p class="metric-value">¥131,907</p>
+            </div>
           </div>
+
+          <div class="payment-note">本日のお支払いは¥0</div>
         </div>
       </section>
+
+      <div id="status" class="status" aria-live="polite">
+        <span class="spinner" aria-hidden="true"></span>
+        <span id="statusText">シェアを準備中...</span>
+      </div>
+
+      <div class="actions">
+        <button id="shareButton" class="primary" disabled>LINEでシェア</button>
+        <button id="closeButton" class="secondary" type="button">閉じる</button>
+      </div>
     </main>
 
     <script>
@@ -267,18 +279,18 @@
       async function fetchFlexMessage() {
         const response = await fetch(MESSAGE_ENDPOINT, { cache: "no-store" });
         if (!response.ok) {
-          throw new Error(`Message unavailable (${response.status})`);
+          throw new Error(`メッセージを読み込めません (${response.status})`);
         }
         return response.json();
       }
 
       async function shareListing() {
         shareButton.disabled = true;
-        setStatus("Opening LINE...", "loading");
+        setStatus("LINEを開いています...", "loading");
 
         try {
           if (!liff.isApiAvailable("shareTargetPicker")) {
-            throw new Error("LINE sharing is unavailable in this context.");
+            throw new Error("この環境ではLINEシェアを利用できません。");
           }
 
           const message = await flexMessagePromise;
@@ -287,9 +299,9 @@
           });
 
           if (result) {
-            setStatus("Shared on LINE.", "done");
+            setStatus("LINEでシェアしました。", "done");
           } else {
-            setStatus("Share canceled.", "ready");
+            setStatus("シェアをキャンセルしました。", "ready");
           }
         } catch (error) {
           setStatus(error.message || String(error), "error");
@@ -303,18 +315,18 @@
           await liff.init({ liffId: LIFF_ID });
 
           if (!liff.isLoggedIn()) {
-            setStatus("Opening LINE login...", "loading");
+            setStatus("LINEログインを開いています...", "loading");
             liff.login({ redirectUri: window.location.href });
             return;
           }
 
           if (!liff.isApiAvailable("shareTargetPicker")) {
-            setStatus("LINE sharing is unavailable.", "error");
+            setStatus("この環境ではLINEシェアを利用できません。", "error");
             return;
           }
 
           shareButton.disabled = false;
-          setStatus(shouldAutoShare ? "Opening LINE..." : "Ready to share.", "ready");
+          setStatus(shouldAutoShare ? "LINEを開いています..." : "シェアできます。", "ready");
 
           if (shouldAutoShare) {
             await shareListing();
