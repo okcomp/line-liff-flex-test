@@ -140,5 +140,32 @@
         "paddingBottom": "lg"
       }
     ]
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "style": "primary",
+        "height": "sm",
+        "action": {
+          "type": "uri",
+          "label": "リンクを開く",
+          "uri": "https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1",
+          "altUri": {
+            "desktop": "https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1"
+          }
+        },
+        "color": "#FF385C"
+      }
+    ],
+    "flex": 0
+  },
+  "styles": {
+    "footer": {
+      "separator": true
+    }
   }
 }

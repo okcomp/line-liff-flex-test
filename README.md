@@ -155,7 +155,7 @@ https://liff.line.me/2010072810-4TWyKraj?auto=0
 ## Notes
 
 - The Flex JSON source is `data/pdp.json`; the runtime message is embedded in `public/index.html` to avoid an extra fetch inside LINE.
-- The shared Flex card intentionally has no footer button and no hero tap action for this demo.
+- The shared Flex card keeps the original footer button and intentionally has no hero tap action for this demo.
 - The page shows listing context only; it does not display the current LINE user's account details.
 - This app intentionally does not use LINE Messaging API or LINE iOS SDK.
 - The receiver is selected by the LINE user in the target picker.
