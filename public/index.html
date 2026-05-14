@@ -3,6 +3,9 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>LINEで宿泊先をシェア</title>
     <link rel="preconnect" href="https://static.line-scdn.net" />
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
@@ -202,6 +205,7 @@
           class="cover"
           src="https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440"
           fetchpriority="low"
+          decoding="async"
           alt=""
         />
         <div class="pdp-content">
@@ -225,14 +229,14 @@
       </div>
 
       <div class="actions">
-        <button id="shareButton" class="primary" disabled>LINEでシェア</button>
+        <button id="shareButton" class="primary" type="button" disabled>LINEでシェア</button>
         <button id="closeButton" class="secondary" type="button">閉じる</button>
       </div>
     </main>
 
     <script>
       const LIFF_ID = "2010072810-4TWyKraj";
-      const FLEX_MESSAGE = {"type":"flex","altText":"Check out this Airbnb listing","contents":{"type":"bubble","hero":{"type":"image","url":"https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440","size":"full","aspectRatio":"20:13","aspectMode":"cover","action":{"type":"uri","uri":"https://line.me/"}},"body":{"type":"box","layout":"vertical","contents":[{"type":"box","layout":"baseline","margin":"md","contents":[{"type":"text","text":"軽井沢町の一軒家","size":"lg","weight":"bold"},{"type":"icon","size":"xs","url":"https://raw.githubusercontent.com/okcomp/images-temp/refs/heads/main/star%20(1).png","offsetEnd":"sm"},{"type":"text","text":"4.92","size":"lg","flex":0,"weight":"bold","align":"end"}]},{"type":"box","layout":"vertical","margin":"lg","spacing":"sm","contents":[{"type":"box","layout":"baseline","spacing":"sm","contents":[{"type":"text","text":"軽井沢追分 ｜森の中の1棟貸切別荘｜プライベ","wrap":false,"color":"#666666","size":"sm","flex":5}]},{"type":"box","layout":"baseline","spacing":"sm","contents":[{"type":"text","text":"寝室1・ベッド3・バスルーム1","wrap":true,"color":"#666666","size":"sm","flex":5}]},{"type":"box","layout":"vertical","contents":[{"type":"text","text":"6月15日～20日","color":"#666666","size":"sm","flex":1}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","contents":[{"type":"span","text":"¥131,907","decoration":"underline","weight":"bold"},{"type":"span","text":"（5泊）","color":"#666666"}],"size":"md"}],"offsetTop":"sm","offsetBottom":"md"},{"type":"box","layout":"baseline","contents":[{"type":"text","text":"本日のお支払いは¥0","offsetStart":"none","margin":"sm","size":"sm","color":"#666666"}],"cornerRadius":"sm","backgroundColor":"#F0F0F0","borderWidth":"none","width":"140px","margin":"lg","offsetStart":"none","paddingAll":"xs","spacing":"none"}],"paddingBottom":"lg"}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","style":"primary","height":"sm","action":{"type":"uri","label":"リンクを開く","uri":"https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1","altUri":{"desktop":"https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1"}},"color":"#FF385C"}],"flex":0},"styles":{"footer":{"separator":true}}}};
+      const FLEX_MESSAGE = {"type":"flex","altText":"軽井沢町の宿泊先をシェアしました","contents":{"type":"bubble","hero":{"type":"image","url":"https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440","size":"full","aspectRatio":"20:13","aspectMode":"cover"},"body":{"type":"box","layout":"vertical","contents":[{"type":"box","layout":"baseline","margin":"md","contents":[{"type":"text","text":"軽井沢町の一軒家","size":"lg","weight":"bold"},{"type":"text","text":"★","size":"sm","weight":"bold","flex":0,"margin":"md"},{"type":"text","text":"4.92","size":"lg","flex":0,"weight":"bold","align":"end"}]},{"type":"box","layout":"vertical","margin":"lg","spacing":"sm","contents":[{"type":"box","layout":"baseline","spacing":"sm","contents":[{"type":"text","text":"軽井沢追分 ｜森の中の1棟貸切別荘｜プライベ","wrap":false,"color":"#666666","size":"sm","flex":5}]},{"type":"box","layout":"baseline","spacing":"sm","contents":[{"type":"text","text":"寝室1・ベッド3・バスルーム1","wrap":true,"color":"#666666","size":"sm","flex":5}]},{"type":"box","layout":"vertical","contents":[{"type":"text","text":"6月15日～20日","color":"#666666","size":"sm","flex":1}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","contents":[{"type":"span","text":"¥131,907","decoration":"underline","weight":"bold"},{"type":"span","text":"（5泊）","color":"#666666"}],"size":"md"}],"offsetTop":"sm","offsetBottom":"md"},{"type":"box","layout":"baseline","contents":[{"type":"text","text":"本日のお支払いは¥0","offsetStart":"none","margin":"sm","size":"sm","color":"#666666"}],"cornerRadius":"sm","backgroundColor":"#F0F0F0","borderWidth":"none","width":"140px","margin":"lg","offsetStart":"none","paddingAll":"xs","spacing":"none"}],"paddingBottom":"lg"}]}}};
       const params = new URLSearchParams(window.location.search);
       const shouldAutoShare = params.get("auto") !== "0";
 
@@ -240,6 +244,7 @@
       const statusTextEl = document.querySelector("#statusText");
       const shareButton = document.querySelector("#shareButton");
       const closeButton = document.querySelector("#closeButton");
+      let isSharing = false;
 
       const transientErrorPattern =
         /Load failed|Failed to fetch|NetworkError|network|timeout|timed out/i;
@@ -302,9 +307,36 @@
         return JSON.parse(JSON.stringify(FLEX_MESSAGE));
       }
 
+      function isInLineClient() {
+        try {
+          return Boolean(window.liff && liff.isInClient());
+        } catch (error) {
+          return false;
+        }
+      }
+
+      function closeWindowSafely() {
+        if (isInLineClient()) {
+          try {
+            liff.closeWindow();
+            return;
+          } catch (error) {
+            console.warn("Could not close LIFF window", error);
+          }
+        }
+
+        window.close();
+      }
+
       async function shareListing({ auto = false } = {}) {
+        if (isSharing) {
+          return;
+        }
+
+        isSharing = true;
         shareButton.disabled = true;
         setStatus("LINEを開いています...", "loading");
+        let keepButtonDisabled = false;
 
         try {
           if (!liff.isApiAvailable("shareTargetPicker")) {
@@ -325,8 +357,9 @@
 
           if (result) {
             setStatus("LINEでシェアしました。", "done");
-            if (liff.isInClient()) {
-              liff.closeWindow();
+            if (isInLineClient()) {
+              keepButtonDisabled = true;
+              window.setTimeout(closeWindowSafely, 120);
             }
           } else {
             setStatus("もう一度シェアできます。", "ready");
@@ -340,7 +373,8 @@
             isTransientError(error) ? "ready" : "error"
           );
         } finally {
-          shareButton.disabled = false;
+          isSharing = false;
+          shareButton.disabled = keepButtonDisabled;
         }
       }
 
@@ -378,13 +412,7 @@
       shareButton.addEventListener("click", () => {
         shareListing();
       });
-      closeButton.addEventListener("click", () => {
-        if (window.liff && liff.isInClient()) {
-          liff.closeWindow();
-        } else {
-          window.close();
-        }
-      });
+      closeButton.addEventListener("click", closeWindowSafely);
 
       init();
     </script>
