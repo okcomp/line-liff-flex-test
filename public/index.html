@@ -396,12 +396,13 @@
             return;
           }
 
-          shareButton.disabled = false;
           setStatus(shouldAutoShare ? "LINEを開いています..." : "シェアできます。", "ready");
 
           if (shouldAutoShare) {
             await waitForLineClientReady();
             await shareListing({ auto: true });
+          } else {
+            shareButton.disabled = false;
           }
         } catch (error) {
           console.warn("LIFF init failed", error);
