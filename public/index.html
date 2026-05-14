@@ -139,45 +139,11 @@
         font-weight: 700;
       }
 
-      .card-cta {
-        padding: 12px;
-        border-top: 1px solid #ebebeb;
-      }
-
-      .card-cta-button {
-        min-height: 42px;
-        width: 100%;
-        border-radius: 8px;
-        background: #ff385c;
-        color: #ffffff;
-        font-size: 16px;
-      }
-
       .status {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        min-height: 20px;
         margin: 12px 0 0;
         color: #222222;
         font-size: 13px;
         font-weight: 700;
-      }
-
-      .spinner {
-        width: 14px;
-        height: 14px;
-        border: 2px solid #dddddd;
-        border-top-color: #ff385c;
-        border-radius: 50%;
-        animation: spin 0.8s linear infinite;
-      }
-
-      .status.ready .spinner,
-      .status.error .spinner,
-      .status.done .spinner {
-        animation: none;
-        border-color: currentColor;
       }
 
       .status.error {
@@ -223,11 +189,6 @@
         opacity: 0.55;
       }
 
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
     </style>
   </head>
   <body>
@@ -258,13 +219,9 @@
           <p class="price"><span class="price-main">¥131,907</span><span class="price-sub">（5泊）</span></p>
           <div class="payment-note">本日のお支払いは¥0</div>
         </div>
-        <div class="card-cta">
-          <button class="card-cta-button" type="button" disabled>リンクを開く</button>
-        </div>
       </section>
 
       <div id="status" class="status" aria-live="polite">
-        <span class="spinner" aria-hidden="true"></span>
         <span id="statusText">シェアを準備中...</span>
       </div>
 
