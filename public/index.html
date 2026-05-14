@@ -29,7 +29,7 @@
       }
 
       main {
-        width: min(100%, 440px);
+        width: min(100%, 420px);
       }
 
       .page-header {
@@ -74,61 +74,90 @@
       }
 
       .pdp-content {
-        padding: 20px;
+        padding: 22px;
+      }
+
+      .title-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 14px;
+        align-items: start;
       }
 
       .pdp-title {
         margin: 0;
-        font-size: 22px;
+        font-size: 24px;
         font-weight: 800;
-        line-height: 1.32;
+        line-height: 1.22;
         letter-spacing: 0;
       }
 
+      .rating {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        white-space: nowrap;
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .star {
+        font-size: 18px;
+      }
+
       .pdp-subtitle {
-        margin: 8px 0 0;
+        margin: 14px 0 0;
         color: #5f5f5f;
-        font-size: 15px;
+        font-size: 17px;
         line-height: 1.45;
       }
 
-      .metrics {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
-        margin-top: 18px;
-        padding-top: 16px;
-        border-top: 1px solid #ebebeb;
+      .dates {
+        margin: 4px 0 0;
+        color: #5f5f5f;
+        font-size: 17px;
+        line-height: 1.45;
       }
 
-      .metric {
-        min-width: 0;
-      }
-
-      .metric-label {
-        margin: 0 0 4px;
-        color: #717171;
-        font-size: 11px;
-        font-weight: 700;
-      }
-
-      .metric-value {
-        margin: 0;
-        font-size: 15px;
-        font-weight: 800;
+      .price {
+        margin: 14px 0 0;
+        font-size: 20px;
         line-height: 1.25;
-        overflow-wrap: anywhere;
+      }
+
+      .price-main {
+        font-weight: 800;
+        text-decoration: underline;
+      }
+
+      .price-sub {
+        color: #5f5f5f;
       }
 
       .payment-note {
         display: inline-flex;
-        margin-top: 16px;
-        padding: 6px 12px;
-        border-radius: 999px;
+        margin-top: 12px;
+        padding: 5px 11px;
+        border-radius: 6px;
         background: #f0f0f0;
-        color: #3f3f3f;
-        font-size: 14px;
+        color: #5f5f5f;
+        font-size: 17px;
         font-weight: 700;
+      }
+
+      .card-cta {
+        padding: 16px;
+        border-top: 1px solid #ebebeb;
+      }
+
+      .card-cta-button {
+        min-height: 52px;
+        width: 100%;
+        border-radius: 8px;
+        background: #ff385c;
+        color: #ffffff;
+        font-size: 18px;
       }
 
       .status {
@@ -224,25 +253,21 @@
           alt=""
         />
         <div class="pdp-content">
-          <p class="pdp-title">軽井沢追分｜森の中の1棟貸切別荘</p>
-          <p class="pdp-subtitle">長野県軽井沢町のまるまる貸切の一軒家</p>
-
-          <div class="metrics">
-            <div class="metric">
-              <p class="metric-label">評価</p>
-              <p class="metric-value">★ 4.92</p>
-            </div>
-            <div class="metric">
-              <p class="metric-label">日程</p>
-              <p class="metric-value">6月15日〜20日</p>
-            </div>
-            <div class="metric">
-              <p class="metric-label">料金</p>
-              <p class="metric-value">¥131,907</p>
+          <div class="title-row">
+            <p class="pdp-title">軽井沢町の一軒家</p>
+            <div class="rating" aria-label="評価 4.92">
+              <span class="star" aria-hidden="true">★</span>
+              <span>4.92</span>
             </div>
           </div>
 
+          <p class="pdp-subtitle">軽井沢追分｜森の中の1棟貸切別荘｜寝室1・ベッド3・バスルーム1</p>
+          <p class="dates">6月15日〜20日</p>
+          <p class="price"><span class="price-main">¥131,907</span><span class="price-sub">（5泊）</span></p>
           <div class="payment-note">本日のお支払いは¥0</div>
+        </div>
+        <div class="card-cta">
+          <button class="card-cta-button" type="button" disabled>リンクを開く</button>
         </div>
       </section>
 
