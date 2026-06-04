@@ -2,527 +2,111 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="Cache-Control" content="no-store" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-    <title>Share this stay on LINE</title>
-    <link rel="preconnect" href="https://static.line-scdn.net" />
-    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Preparing your link</title>
     <style>
-      :root {
-        color-scheme: light;
-        font-family:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        --keyboard-spacer: 0px;
-        background: #f2f3f2;
-        color: #1f1f1f;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        min-height: 100%;
-        background: #f2f3f2;
-        -webkit-text-size-adjust: 100%;
-      }
-
+      html,
       body {
+        width: 100%;
+        height: 100%;
         margin: 0;
-        min-height: 100vh;
-        background: #f2f3f2;
-      }
-
-      button,
-      textarea {
-        font: inherit;
-      }
-
-      .share-page {
-        position: relative;
-        width: min(100%, 430px);
-        min-height: 100vh;
-        margin: 0 auto;
-        padding: 20px 0 calc(112px + var(--keyboard-spacer));
-        overflow-x: hidden;
-        background: #ffffff;
-      }
-
-      .content {
-        padding: 0 16px;
-      }
-
-      .pdp-card {
-        width: min(100%, 312px);
-        margin: 0 auto;
         overflow: hidden;
-        border: 1px solid #eeeeee;
-        border-radius: 13px;
         background: #ffffff;
-        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.14);
       }
-
-      .cover {
-        display: block;
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-        background: #eeeeee;
-      }
-
-      .pdp-content {
-        padding: 13px 16px 15px;
-      }
-
-      .pdp-title {
-        margin: 0;
-        color: #111111;
-        font-size: 15px;
-        font-weight: 800;
-        line-height: 1.14;
-        letter-spacing: 0;
-      }
-
-      .rating {
-        display: flex;
-        align-items: center;
-        gap: 3px;
-        margin-top: 6px;
-        color: #111111;
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 1.2;
-      }
-
-      .review-count {
-        font-weight: 500;
-      }
-
-      .pdp-subtitle,
-      .dates,
-      .price-sub {
-        color: #777777;
-      }
-
-      .pdp-subtitle,
-      .dates {
-        margin: 6px 0 0;
-        font-size: 12px;
-        line-height: 1.28;
-      }
-
-      .price {
-        margin: 13px 0 0;
-        color: #111111;
-        font-size: 12px;
-        line-height: 1.25;
-      }
-
-      .price-main {
-        font-size: 15px;
-        font-weight: 800;
-      }
-
-      .message-area {
-        margin: 14px -16px 0;
-        border-top: 1px solid #eeeeee;
-        scroll-margin-bottom: calc(24px + var(--keyboard-spacer));
-      }
-
-      .plain-message {
-        display: block;
-        width: 100%;
-        min-height: 92px;
-        padding: 15px 17px;
-        resize: none;
-        border: 0;
-        outline: 0;
-        background: #ffffff;
-        color: #222222;
-        font-size: 16px;
-        line-height: 1.35;
-      }
-
-      .plain-message::placeholder {
-        color: #b4b4b4;
-      }
-
-      .bottom-bar {
-        position: fixed;
-        left: 50%;
-        bottom: 0;
-        z-index: 2;
-        width: min(100%, 430px);
-        padding: 13px 16px max(28px, env(safe-area-inset-bottom));
-        transform: translateX(-50%);
-        border-top: 1px solid #eeeeee;
-        background: rgba(255, 255, 255, 0.98);
-        transition:
-          opacity 120ms ease,
-          transform 120ms ease;
-      }
-
-      body.keyboard-open .bottom-bar {
-        opacity: 0;
-        pointer-events: none;
-        transform: translate(-50%, 100%);
-      }
-
-      .status {
-        min-height: 17px;
-        margin: 0 0 9px;
-        color: #5f5f5f;
-        font-size: 12px;
-        font-weight: 600;
-        line-height: 1.35;
-        text-align: center;
-      }
-
-      .status:empty {
-        display: none;
-      }
-
-      .status.error {
-        color: #b00020;
-      }
-
-      .status.done {
-        color: #008a05;
-      }
-
-      .share-button {
-        appearance: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        min-height: 44px;
-        border: 0;
-        border-radius: 6px;
-        background: #06c755;
-        color: #ffffff;
-        font-size: 14px;
-        font-weight: 800;
-        cursor: pointer;
-      }
-
-      .share-button:disabled {
-        cursor: not-allowed;
-        opacity: 0.55;
-      }
-
     </style>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   </head>
   <body>
-    <main class="share-page">
-      <div class="content">
-        <section class="pdp-card" aria-label="Listing preview">
-          <img
-            class="cover"
-            src="https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440"
-            fetchpriority="low"
-            decoding="async"
-            alt=""
-          />
-          <div class="pdp-content">
-            <p class="pdp-title">軽井沢町の一軒家</p>
-            <div class="rating" aria-label="Rating 4.92 out of 5">
-              <span aria-hidden="true">★</span>
-              <span>4.92</span>
-              <span class="review-count">(117)</span>
-            </div>
-
-            <p class="pdp-subtitle">軽井沢追分｜森の中の1棟貸切別荘｜寝室1・ベッド3・バスルーム1</p>
-            <p class="dates">6月15日〜20日</p>
-            <p class="price"><span class="price-main">¥132,107</span><span class="price-sub"> for 5 nights</span></p>
-          </div>
-        </section>
-
-        <div class="message-area">
-          <textarea
-            id="plainMessage"
-            class="plain-message"
-            aria-label="Message to send with the listing"
-            placeholder="Enter context here..."
-            maxlength="5000"
-            rows="3"
-          ></textarea>
-        </div>
-      </div>
-
-      <div class="bottom-bar">
-        <div id="status" class="status" aria-live="polite">
-          <span id="statusText">Loading...</span>
-        </div>
-        <button id="shareButton" class="share-button" type="button" disabled>Share to...</button>
-      </div>
-    </main>
-
     <script>
-      const LIFF_ID = "2010072810-4TWyKraj";
-      const DEFAULT_PLAIN_MESSAGE = "軽井沢町の宿泊先をシェアしました";
-      const FLEX_MESSAGE = {"type":"flex","altText":"軽井沢町の宿泊先をシェアしました","contents":{"type":"bubble","hero":{"type":"image","url":"https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440","size":"full","aspectRatio":"20:13","aspectMode":"cover"},"body":{"type":"box","layout":"vertical","contents":[{"type":"box","layout":"baseline","margin":"md","contents":[{"type":"text","text":"軽井沢町の一軒家","size":"lg","weight":"bold"},{"type":"text","text":"★","size":"sm","weight":"bold","flex":0,"margin":"md"},{"type":"text","text":"4.92","size":"lg","flex":0,"weight":"bold","align":"end"}]},{"type":"box","layout":"vertical","margin":"lg","spacing":"sm","contents":[{"type":"box","layout":"baseline","spacing":"sm","contents":[{"type":"text","text":"軽井沢追分 ｜森の中の1棟貸切別荘｜プライベ","wrap":false,"color":"#666666","size":"sm","flex":5}]},{"type":"box","layout":"baseline","spacing":"sm","contents":[{"type":"text","text":"寝室1・ベッド3・バスルーム1","wrap":true,"color":"#666666","size":"sm","flex":5}]},{"type":"box","layout":"vertical","contents":[{"type":"text","text":"6月15日～20日","color":"#666666","size":"sm","flex":1}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","contents":[{"type":"span","text":"¥132,107","decoration":"underline","weight":"bold"},{"type":"span","text":"（5泊）","color":"#666666"}],"size":"md"}],"offsetTop":"sm","offsetBottom":"md"},{"type":"box","layout":"baseline","contents":[{"type":"text","text":"本日のお支払いは¥0","offsetStart":"none","margin":"sm","size":"sm","color":"#666666"}],"cornerRadius":"sm","backgroundColor":"#F0F0F0","borderWidth":"none","width":"140px","margin":"lg","offsetStart":"none","paddingAll":"xs","spacing":"none"}],"paddingBottom":"lg"}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","style":"primary","height":"sm","action":{"type":"uri","label":"リンクを開く","uri":"https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1","altUri":{"desktop":"https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1"}},"color":"#FF385C"}],"flex":0},"styles":{"footer":{"separator":true}}}};
-      const params = new URLSearchParams(window.location.search);
-      const shouldAutoShare = params.get("auto") === "1";
+      (() => {
+        "use strict";
 
-      const statusEl = document.querySelector("#status");
-      const statusTextEl = document.querySelector("#statusText");
-      const shareButton = document.querySelector("#shareButton");
-      const plainMessageEl = document.querySelector("#plainMessage");
-      let isSharing = false;
-      let keyboardScrollTimer;
-      let keyboardResizeTimer;
+        const LIFF_ID = "2010072810-4TWyKraj";
+        const DEFAULT_TEXT = "軽井沢町の宿泊先をシェアしました";
+        const FLEX_MESSAGE = {"type":"flex","altText":"軽井沢町の宿泊先をシェアしました","contents":{"type":"bubble","hero":{"type":"image","url":"https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440","size":"full","aspectRatio":"20:13","aspectMode":"cover"},"body":{"type":"box","layout":"vertical","contents":[{"type":"box","layout":"baseline","margin":"md","contents":[{"type":"text","text":"軽井沢町の一軒家","size":"lg","weight":"bold"},{"type":"text","text":"★","size":"sm","weight":"bold","flex":0,"margin":"md"},{"type":"text","text":"4.92","size":"lg","flex":0,"weight":"bold","align":"end"}]},{"type":"box","layout":"vertical","margin":"lg","spacing":"sm","contents":[{"type":"box","layout":"baseline","spacing":"sm","contents":[{"type":"text","text":"軽井沢追分 ｜森の中の1棟貸切別荘｜プライベ","wrap":false,"color":"#666666","size":"sm","flex":5}]},{"type":"box","layout":"baseline","spacing":"sm","contents":[{"type":"text","text":"寝室1・ベッド3・バスルーム1","wrap":true,"color":"#666666","size":"sm","flex":5}]},{"type":"box","layout":"vertical","contents":[{"type":"text","text":"6月15日～20日","color":"#666666","size":"sm","flex":1}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","contents":[{"type":"span","text":"¥132,107","decoration":"underline","weight":"bold"},{"type":"span","text":"（5泊）","color":"#666666"}],"size":"md"}],"offsetTop":"sm","offsetBottom":"md"},{"type":"box","layout":"baseline","contents":[{"type":"text","text":"本日のお支払いは¥0","offsetStart":"none","margin":"sm","size":"sm","color":"#666666"}],"cornerRadius":"sm","backgroundColor":"#F0F0F0","borderWidth":"none","width":"140px","margin":"lg","offsetStart":"none","paddingAll":"xs","spacing":"none"}],"paddingBottom":"lg"}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","style":"primary","height":"sm","action":{"type":"uri","label":"リンクを開く","uri":"https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1","altUri":{"desktop":"https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1"}},"color":"#FF385C"}],"flex":0},"styles":{"footer":{"separator":true}}}};
 
-      const transientErrorPattern =
-        /Load failed|Failed to fetch|NetworkError|network|timeout|timed out/i;
-
-      function setStatus(message, tone = "loading") {
-        statusTextEl.textContent = message;
-        statusEl.hidden = message === "";
-        statusEl.classList.toggle("ready", tone === "ready");
-        statusEl.classList.toggle("done", tone === "done");
-        statusEl.classList.toggle("error", tone === "error");
-      }
-
-      function getErrorMessage(error) {
-        if (error instanceof Error && error.message) {
-          return error.message;
-        }
-        return String(error);
-      }
-
-      function isTransientError(error) {
-        return transientErrorPattern.test(getErrorMessage(error));
-      }
-
-      function sleep(ms) {
-        return new Promise((resolve) => {
-          window.setTimeout(resolve, ms);
-        });
-      }
-
-      async function withRetry(task, { attempts = 2, delayMs = 350 } = {}) {
-        let lastError;
-
-        for (let attempt = 1; attempt <= attempts; attempt += 1) {
-          try {
-            return await task();
-          } catch (error) {
-            lastError = error;
-
-            if (attempt === attempts || !isTransientError(error)) {
-              break;
-            }
-
-            await sleep(delayMs * attempt);
-          }
-        }
-
-        throw lastError;
-      }
-
-      async function waitForLineClientReady() {
-        await Promise.race([
-          new Promise((resolve) => {
-            window.requestAnimationFrame(resolve);
-          }),
-          sleep(80)
-        ]);
-        await sleep(120);
-      }
-
-      function cloneFlexMessage() {
-        return JSON.parse(JSON.stringify(FLEX_MESSAGE));
-      }
-
-      function getPlainMessage() {
-        return plainMessageEl.value.trim() || DEFAULT_PLAIN_MESSAGE;
-      }
-
-      function buildShareMessages() {
-        return [
-          {
-            type: "text",
-            text: getPlainMessage()
-          },
-          cloneFlexMessage()
+        const messages = [
+          { type: "text", text: DEFAULT_TEXT },
+          FLEX_MESSAGE
         ];
-      }
 
-      function getKeyboardInset() {
-        if (!window.visualViewport) {
-          return 0;
-        }
+        let started = false;
 
-        return Math.max(
-          0,
-          window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop
-        );
-      }
-
-      function setKeyboardLayout(isOpen) {
-        const keyboardInset = getKeyboardInset();
-        const spacer = isOpen ? Math.max(keyboardInset, 320) : 0;
-
-        document.body.classList.toggle("keyboard-open", isOpen);
-        document.documentElement.style.setProperty("--keyboard-spacer", `${spacer}px`);
-      }
-
-      function scrollMessageIntoView({ behavior = "auto" } = {}) {
-        if (document.activeElement !== plainMessageEl) {
-          return;
-        }
-
-        const rect = plainMessageEl.getBoundingClientRect();
-        const viewportHeight = window.visualViewport?.height || window.innerHeight;
-        const targetBottom = viewportHeight - 24;
-        const overflow = rect.bottom - targetBottom;
-
-        if (overflow > 0) {
-          window.scrollBy({
-            top: overflow,
-            left: 0,
-            behavior
+        const timeout = (promise, ms, message) => {
+          let timer;
+          const limit = new Promise((_, reject) => {
+            timer = window.setTimeout(() => reject(new Error(message)), ms);
           });
-        }
-      }
 
-      function scheduleMessageScroll() {
-        setKeyboardLayout(true);
-        window.clearTimeout(keyboardScrollTimer);
-        keyboardScrollTimer = window.setTimeout(scrollMessageIntoView, 260);
-      }
+          return Promise.race([promise, limit]).finally(() => window.clearTimeout(timer));
+        };
 
-      function isInLineClient() {
-        try {
-          return Boolean(window.liff && liff.isInClient());
-        } catch (error) {
-          return false;
-        }
-      }
-
-      function closeWindowSafely() {
-        if (isInLineClient()) {
+        const closeWindow = () => {
           try {
-            liff.closeWindow();
-            return;
+            if (window.liff && liff.isInClient()) {
+              window.setTimeout(() => liff.closeWindow(), 180);
+            }
           } catch (error) {
-            console.warn("Could not close LIFF window", error);
+            console.warn("Unable to close LIFF window", error);
           }
-        }
+        };
 
-        window.close();
-      }
+        const allowTapToRetry = () => {
+          started = false;
+          window.addEventListener("touchend", start, { once: true, passive: true });
+          window.addEventListener("click", start, { once: true });
+        };
 
-      async function shareListing({ auto = false } = {}) {
-        if (isSharing) {
-          return;
-        }
+        async function start() {
+          if (started) return;
+          started = true;
 
-        isSharing = true;
-        shareButton.disabled = true;
-        setStatus("Opening LINE...", "loading");
-        let keepButtonDisabled = false;
+          try {
+            await timeout(liff.init({ liffId: LIFF_ID }), 8000, "LIFF init timed out");
 
-        try {
-          if (!liff.isApiAvailable("shareTargetPicker")) {
-            throw new Error("LINE sharing isn't available in this environment.");
-          }
-
-          const messages = buildShareMessages();
-          const result = await withRetry(
-            () =>
-              liff.shareTargetPicker(messages, {
-                isMultiple: false
-              }),
-            {
-              attempts: auto ? 2 : 1,
-              delayMs: 500
+            if (!liff.isLoggedIn()) {
+              liff.login({ redirectUri: window.location.href });
+              return;
             }
-          );
 
-          if (result) {
-            setStatus("Shared on LINE.", "done");
-            if (isInLineClient()) {
-              keepButtonDisabled = true;
-              window.setTimeout(closeWindowSafely, 120);
+            if (!liff.isApiAvailable("shareTargetPicker")) {
+              throw new Error("shareTargetPicker is unavailable.");
             }
-          } else {
-            setStatus("You can share again.", "ready");
+
+            const result = await timeout(
+              liff.shareTargetPicker(messages, { isMultiple: false }),
+              30000,
+              "shareTargetPicker timed out"
+            );
+
+            if (result) {
+              closeWindow();
+              return;
+            }
+
+            allowTapToRetry();
+          } catch (error) {
+            console.warn("LINE share failed", error);
+            allowTapToRetry();
           }
-        } catch (error) {
-          console.warn("LINE share failed", error);
-          setStatus(
-            isTransientError(error)
-              ? "You can share again."
-              : getErrorMessage(error),
-            isTransientError(error) ? "ready" : "error"
-          );
-        } finally {
-          isSharing = false;
-          shareButton.disabled = keepButtonDisabled;
         }
-      }
 
-      async function init() {
-        try {
-          await withRetry(() => liff.init({ liffId: LIFF_ID }), {
-            attempts: 2,
-            delayMs: 500
-          });
-
-          if (!liff.isLoggedIn()) {
-            setStatus("Opening LINE login...", "loading");
-            liff.login({ redirectUri: window.location.href });
+        const boot = () => {
+          if (!window.liff) {
+            window.setTimeout(boot, 40);
             return;
           }
 
-          if (!liff.isApiAvailable("shareTargetPicker")) {
-            setStatus("LINE sharing isn't available in this environment.", "error");
-            return;
-          }
+          start();
+        };
 
-          setStatus(shouldAutoShare ? "Opening LINE..." : "", "ready");
-
-          if (shouldAutoShare) {
-            await waitForLineClientReady();
-            await shareListing({ auto: true });
-          } else {
-            shareButton.disabled = false;
-          }
-        } catch (error) {
-          console.warn("LIFF init failed", error);
-          setStatus(getErrorMessage(error), "error");
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", boot, { once: true });
+        } else {
+          boot();
         }
-      }
-
-      shareButton.addEventListener("click", () => {
-        shareListing();
-      });
-
-      plainMessageEl.addEventListener("focus", scheduleMessageScroll);
-      plainMessageEl.addEventListener("click", scheduleMessageScroll);
-      plainMessageEl.addEventListener("blur", () => {
-        window.clearTimeout(keyboardScrollTimer);
-        window.clearTimeout(keyboardResizeTimer);
-        window.setTimeout(() => {
-          setKeyboardLayout(document.activeElement === plainMessageEl);
-        }, 180);
-      });
-
-      if (window.visualViewport) {
-        window.visualViewport.addEventListener("resize", () => {
-          if (document.activeElement === plainMessageEl) {
-            setKeyboardLayout(true);
-            window.clearTimeout(keyboardResizeTimer);
-            keyboardResizeTimer = window.setTimeout(scrollMessageIntoView, 80);
-          }
-        });
-      }
-
-      init();
+      })();
     </script>
   </body>
 </html>
