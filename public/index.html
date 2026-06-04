@@ -44,62 +44,13 @@
         width: min(100%, 430px);
         min-height: 100vh;
         margin: 0 auto;
-        padding: 58px 0 112px;
+        padding: 20px 0 112px;
         overflow: hidden;
         background: #ffffff;
       }
 
-      .top-bar {
-        position: fixed;
-        top: 0;
-        left: 50%;
-        z-index: 2;
-        width: min(100%, 430px);
-        min-height: 58px;
-        padding: 14px 56px 9px;
-        transform: translateX(-50%);
-        border-bottom: 1px solid #e8e8e8;
-        background: rgba(255, 255, 255, 0.96);
-        text-align: center;
-        backdrop-filter: blur(16px);
-      }
-
-      h1 {
-        margin: 0;
-        color: #222222;
-        font-size: 13px;
-        font-weight: 700;
-        line-height: 1.2;
-        letter-spacing: 0;
-      }
-
-      .domain {
-        margin: 2px 0 0;
-        color: #25a85a;
-        font-size: 10px;
-        font-weight: 600;
-        line-height: 1.2;
-      }
-
-      .close-button {
-        appearance: none;
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        width: 36px;
-        height: 36px;
-        border: 0;
-        border-radius: 18px;
-        background: transparent;
-        color: #222222;
-        font-size: 28px;
-        font-weight: 300;
-        line-height: 1;
-        cursor: pointer;
-      }
-
       .content {
-        padding: 22px 16px 0;
+        padding: 0 16px;
       }
 
       .pdp-card {
@@ -266,12 +217,6 @@
   </head>
   <body>
     <main class="share-page">
-      <header class="top-bar">
-        <h1>Share the listing with your friends</h1>
-        <p class="domain">okcomp.github.io</p>
-        <button id="closeButton" class="close-button" type="button" aria-label="Close">×</button>
-      </header>
-
       <div class="content">
         <section class="pdp-card" aria-label="Listing preview">
           <img
@@ -326,7 +271,6 @@
       const statusEl = document.querySelector("#status");
       const statusTextEl = document.querySelector("#statusText");
       const shareButton = document.querySelector("#shareButton");
-      const closeButton = document.querySelector("#closeButton");
       const plainMessageEl = document.querySelector("#plainMessage");
       let isSharing = false;
 
@@ -512,7 +456,6 @@
       shareButton.addEventListener("click", () => {
         shareListing();
       });
-      closeButton.addEventListener("click", closeWindowSafely);
 
       init();
     </script>
