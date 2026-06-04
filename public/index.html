@@ -4,6 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#ffffff" />
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Preparing your link</title>
     <style>
       html,
@@ -32,6 +35,7 @@
         ];
 
         let started = false;
+        let liffReadyPromise;
 
         const timeout = (promise, ms, message) => {
           let timer;
@@ -58,12 +62,23 @@
           window.addEventListener("click", start, { once: true });
         };
 
+        const ensureLiffReady = () => {
+          if (!liffReadyPromise) {
+            liffReadyPromise = liff.init({ liffId: LIFF_ID }).catch((error) => {
+              liffReadyPromise = undefined;
+              throw error;
+            });
+          }
+
+          return liffReadyPromise;
+        };
+
         async function start() {
           if (started) return;
           started = true;
 
           try {
-            await timeout(liff.init({ liffId: LIFF_ID }), 8000, "LIFF init timed out");
+            await timeout(ensureLiffReady(), 8000, "LIFF init timed out");
 
             if (!liff.isLoggedIn()) {
               liff.login({ redirectUri: window.location.href });
@@ -74,11 +89,7 @@
               throw new Error("shareTargetPicker is unavailable.");
             }
 
-            const result = await timeout(
-              liff.shareTargetPicker(messages, { isMultiple: false }),
-              30000,
-              "shareTargetPicker timed out"
-            );
+            const result = await liff.shareTargetPicker(messages, { isMultiple: false });
 
             if (result) {
               closeWindow();
@@ -101,11 +112,7 @@
           start();
         };
 
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", boot, { once: true });
-        } else {
-          boot();
-        }
+        boot();
       })();
     </script>
   </body>
