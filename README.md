@@ -1,6 +1,6 @@
 # LINE LIFF Share Page
 
-Production-style LIFF share page for testing `shareTargetPicker()` with a plain text message and a Flex Message listing card.
+LIFF share pages for testing `shareTargetPicker()` with a plain text message and a Flex Message listing card.
 
 The real LINE test needs a public HTTPS URL. The `public/` directory is a complete static site:
 
@@ -9,6 +9,26 @@ The real LINE test needs a public HTTPS URL. The `public/` directory is a comple
 - `data/pdp.json` stores the source Flex bubble used by the inline message.
 
 Deploy `public/` to any HTTPS static host, then set that deployed URL as the LIFF endpoint URL in the LINE Developers Console.
+
+## Demo versions
+
+This repo keeps the two demo experiences as separate branches so the Airbnb app can keep opening the same LIFF URL:
+
+- `main`: production-style middle page with listing context, editable plain message, and a manual share button.
+- `codex/liff-blank-fast`: blank fast path with page title `preparing ..`; it initializes LIFF and opens the picker as quickly as possible.
+
+Deploy the version you want to demo by running the Pages workflow on that branch:
+
+```bash
+gh workflow run deploy-pages.yml --repo okcomp/line-liff-flex-test --ref main
+gh workflow run deploy-pages.yml --repo okcomp/line-liff-flex-test --ref codex/liff-blank-fast
+```
+
+Check the latest deploy:
+
+```bash
+gh run list --repo okcomp/line-liff-flex-test --workflow deploy-pages.yml --limit 1
+```
 
 ## Run locally
 
