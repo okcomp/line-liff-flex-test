@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-store" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>LINEで宿泊先をシェア</title>
+    <title>Share this stay on LINE</title>
     <link rel="preconnect" href="https://static.line-scdn.net" />
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
@@ -14,138 +14,222 @@
         color-scheme: light;
         font-family:
           -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        background: #f7f7f5;
-        color: #222222;
+        background: #f2f3f2;
+        color: #1f1f1f;
       }
 
       * {
         box-sizing: border-box;
       }
 
+      html {
+        min-height: 100%;
+        background: #f2f3f2;
+      }
+
       body {
         margin: 0;
         min-height: 100vh;
-        display: grid;
-        place-items: center;
-        padding: 16px;
+        background: #f2f3f2;
       }
 
-      main {
-        width: min(100%, 380px);
+      button,
+      textarea {
+        font: inherit;
       }
 
-      .page-header {
-        margin-bottom: 12px;
+      .share-page {
+        position: relative;
+        width: min(100%, 430px);
+        min-height: 100vh;
+        margin: 0 auto;
+        padding: 58px 0 112px;
+        overflow: hidden;
+        background: #ffffff;
+      }
+
+      .top-bar {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        z-index: 2;
+        width: min(100%, 430px);
+        min-height: 58px;
+        padding: 14px 56px 9px;
+        transform: translateX(-50%);
+        border-bottom: 1px solid #e8e8e8;
+        background: rgba(255, 255, 255, 0.96);
+        text-align: center;
+        backdrop-filter: blur(16px);
       }
 
       h1 {
         margin: 0;
-        font-size: 22px;
+        color: #222222;
+        font-size: 13px;
+        font-weight: 700;
         line-height: 1.2;
         letter-spacing: 0;
       }
 
-      .intro {
-        margin: 4px 0 0;
-        color: #5f5f5f;
-        font-size: 13px;
-        line-height: 1.35;
+      .domain {
+        margin: 2px 0 0;
+        color: #25a85a;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      .close-button {
+        appearance: none;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        width: 36px;
+        height: 36px;
+        border: 0;
+        border-radius: 18px;
+        background: transparent;
+        color: #222222;
+        font-size: 28px;
+        font-weight: 300;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      .content {
+        padding: 22px 16px 0;
       }
 
       .pdp-card {
+        width: min(100%, 312px);
+        margin: 0 auto;
         overflow: hidden;
+        border: 1px solid #eeeeee;
+        border-radius: 13px;
         background: #ffffff;
-        border: 1px solid #dddddd;
-        border-radius: 8px;
-        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.14);
       }
 
       .cover {
         display: block;
         width: 100%;
-        aspect-ratio: 2 / 1;
+        aspect-ratio: 20 / 13;
         object-fit: cover;
         background: #eeeeee;
       }
 
       .pdp-content {
-        padding: 16px;
-      }
-
-      .title-row {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 14px;
-        align-items: start;
+        padding: 13px 16px 15px;
       }
 
       .pdp-title {
         margin: 0;
-        font-size: 20px;
+        color: #111111;
+        font-size: 15px;
         font-weight: 800;
-        line-height: 1.22;
+        line-height: 1.14;
         letter-spacing: 0;
       }
 
       .rating {
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        gap: 5px;
-        white-space: nowrap;
-        font-size: 19px;
-        font-weight: 800;
-        line-height: 1;
+        gap: 3px;
+        margin-top: 6px;
+        color: #111111;
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 1.2;
       }
 
-      .star {
-        font-size: 15px;
+      .review-count {
+        font-weight: 500;
       }
 
-      .pdp-subtitle {
-        margin: 10px 0 0;
-        color: #5f5f5f;
-        font-size: 14px;
-        line-height: 1.38;
+      .pdp-subtitle,
+      .dates,
+      .price-sub {
+        color: #777777;
       }
 
+      .pdp-subtitle,
       .dates {
-        margin: 2px 0 0;
-        color: #5f5f5f;
-        font-size: 14px;
-        line-height: 1.35;
+        margin: 6px 0 0;
+        font-size: 12px;
+        line-height: 1.28;
       }
 
       .price {
-        margin: 10px 0 0;
-        font-size: 17px;
+        margin: 13px 0 0;
+        color: #111111;
+        font-size: 12px;
         line-height: 1.25;
       }
 
       .price-main {
+        font-size: 15px;
         font-weight: 800;
-        text-decoration: underline;
-      }
-
-      .price-sub {
-        color: #5f5f5f;
       }
 
       .payment-note {
         display: inline-flex;
-        margin-top: 9px;
-        padding: 4px 9px;
-        border-radius: 6px;
+        margin-top: 7px;
+        padding: 3px 7px;
+        border-radius: 4px;
         background: #f0f0f0;
-        color: #5f5f5f;
-        font-size: 14px;
+        color: #6d6d6d;
+        font-size: 10px;
         font-weight: 700;
       }
 
-      .status {
-        margin: 12px 0 0;
+      .message-area {
+        margin-top: 14px;
+        border-top: 1px solid #eeeeee;
+      }
+
+      .plain-message {
+        display: block;
+        width: 100%;
+        min-height: 92px;
+        padding: 15px 17px;
+        resize: none;
+        border: 0;
+        outline: 0;
+        background: #ffffff;
         color: #222222;
         font-size: 13px;
-        font-weight: 700;
+        line-height: 1.45;
+      }
+
+      .plain-message::placeholder {
+        color: #b4b4b4;
+      }
+
+      .bottom-bar {
+        position: fixed;
+        left: 50%;
+        bottom: 0;
+        z-index: 2;
+        width: min(100%, 430px);
+        padding: 13px 16px max(28px, env(safe-area-inset-bottom));
+        transform: translateX(-50%);
+        border-top: 1px solid #eeeeee;
+        background: rgba(255, 255, 255, 0.98);
+      }
+
+      .status {
+        min-height: 17px;
+        margin: 0 0 9px;
+        color: #5f5f5f;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.35;
+        text-align: center;
+      }
+
+      .status:empty {
+        display: none;
       }
 
       .status.error {
@@ -156,37 +240,23 @@
         color: #008a05;
       }
 
-      .actions {
-        display: grid;
-        gap: 8px;
-        margin-top: 12px;
-      }
-
-      button {
+      .share-button {
         appearance: none;
-        border: 0;
-        border-radius: 8px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        width: 100%;
         min-height: 44px;
-        padding: 0 18px;
-        font-size: 15px;
-        font-weight: 700;
+        border: 0;
+        border-radius: 6px;
+        background: #06c755;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 800;
         cursor: pointer;
       }
 
-      button.primary {
-        background: #ff385c;
-        color: #ffffff;
-      }
-
-      button.secondary {
-        background: #eeeeee;
-        color: #222222;
-      }
-
-      button:disabled {
+      .share-button:disabled {
         cursor: not-allowed;
         opacity: 0.55;
       }
@@ -194,56 +264,69 @@
     </style>
   </head>
   <body>
-    <main>
-      <header class="page-header">
-        <h1>LINEでシェア</h1>
-        <p class="intro">宿泊先カードを送信します。</p>
+    <main class="share-page">
+      <header class="top-bar">
+        <h1>Share the listing with your friends</h1>
+        <p class="domain">okcomp.github.io</p>
+        <button id="closeButton" class="close-button" type="button" aria-label="Close">×</button>
       </header>
 
-      <section class="pdp-card" aria-label="宿泊先の概要">
-        <img
-          class="cover"
-          src="https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440"
-          fetchpriority="low"
-          decoding="async"
-          alt=""
-        />
-        <div class="pdp-content">
-          <div class="title-row">
+      <div class="content">
+        <section class="pdp-card" aria-label="Listing preview">
+          <img
+            class="cover"
+            src="https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440"
+            fetchpriority="low"
+            decoding="async"
+            alt=""
+          />
+          <div class="pdp-content">
             <p class="pdp-title">軽井沢町の一軒家</p>
-            <div class="rating" aria-label="評価 4.92">
-              <span class="star" aria-hidden="true">★</span>
+            <div class="rating" aria-label="Rating 4.92 out of 5">
+              <span aria-hidden="true">★</span>
               <span>4.92</span>
+              <span class="review-count">(117)</span>
             </div>
+
+            <p class="pdp-subtitle">軽井沢追分｜森の中の1棟貸切別荘｜寝室1・ベッド3・バスルーム1</p>
+            <p class="dates">6月15日〜20日</p>
+            <p class="price"><span class="price-main">¥132,107</span><span class="price-sub"> for 5 nights</span></p>
+            <div class="payment-note">¥0 today</div>
           </div>
+        </section>
 
-          <p class="pdp-subtitle">軽井沢追分｜森の中の1棟貸切別荘｜寝室1・ベッド3・バスルーム1</p>
-          <p class="dates">6月15日〜20日</p>
-          <p class="price"><span class="price-main">¥132,107</span><span class="price-sub">（5泊）</span></p>
-          <div class="payment-note">本日のお支払いは¥0</div>
+        <div class="message-area">
+          <textarea
+            id="plainMessage"
+            class="plain-message"
+            aria-label="Message to send with the listing"
+            placeholder="Enter context here..."
+            maxlength="5000"
+            rows="3"
+          ></textarea>
         </div>
-      </section>
-
-      <div id="status" class="status" aria-live="polite">
-        <span id="statusText">シェアを準備中...</span>
       </div>
 
-      <div class="actions">
-        <button id="shareButton" class="primary" type="button" disabled>LINEでシェア</button>
-        <button id="closeButton" class="secondary" type="button">閉じる</button>
+      <div class="bottom-bar">
+        <div id="status" class="status" aria-live="polite">
+          <span id="statusText">Loading...</span>
+        </div>
+        <button id="shareButton" class="share-button" type="button" disabled>Share to...</button>
       </div>
     </main>
 
     <script>
       const LIFF_ID = "2010072810-4TWyKraj";
+      const DEFAULT_PLAIN_MESSAGE = "軽井沢町の宿泊先をシェアしました";
       const FLEX_MESSAGE = {"type":"flex","altText":"軽井沢町の宿泊先をシェアしました","contents":{"type":"bubble","hero":{"type":"image","url":"https://a0.muscache.com/im/pictures/hosting/Hosting-1239731270268012685/original/b2cf0b77-0967-4b21-931e-e369d9ee3b0a.jpeg?im_w=1440","size":"full","aspectRatio":"20:13","aspectMode":"cover"},"body":{"type":"box","layout":"vertical","contents":[{"type":"box","layout":"baseline","margin":"md","contents":[{"type":"text","text":"軽井沢町の一軒家","size":"lg","weight":"bold"},{"type":"text","text":"★","size":"sm","weight":"bold","flex":0,"margin":"md"},{"type":"text","text":"4.92","size":"lg","flex":0,"weight":"bold","align":"end"}]},{"type":"box","layout":"vertical","margin":"lg","spacing":"sm","contents":[{"type":"box","layout":"baseline","spacing":"sm","contents":[{"type":"text","text":"軽井沢追分 ｜森の中の1棟貸切別荘｜プライベ","wrap":false,"color":"#666666","size":"sm","flex":5}]},{"type":"box","layout":"baseline","spacing":"sm","contents":[{"type":"text","text":"寝室1・ベッド3・バスルーム1","wrap":true,"color":"#666666","size":"sm","flex":5}]},{"type":"box","layout":"vertical","contents":[{"type":"text","text":"6月15日～20日","color":"#666666","size":"sm","flex":1}]},{"type":"box","layout":"horizontal","contents":[{"type":"text","contents":[{"type":"span","text":"¥132,107","decoration":"underline","weight":"bold"},{"type":"span","text":"（5泊）","color":"#666666"}],"size":"md"}],"offsetTop":"sm","offsetBottom":"md"},{"type":"box","layout":"baseline","contents":[{"type":"text","text":"本日のお支払いは¥0","offsetStart":"none","margin":"sm","size":"sm","color":"#666666"}],"cornerRadius":"sm","backgroundColor":"#F0F0F0","borderWidth":"none","width":"140px","margin":"lg","offsetStart":"none","paddingAll":"xs","spacing":"none"}],"paddingBottom":"lg"}]},"footer":{"type":"box","layout":"vertical","spacing":"sm","contents":[{"type":"button","style":"primary","height":"sm","action":{"type":"uri","label":"リンクを開く","uri":"https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1","altUri":{"desktop":"https://www.airbnb.jp/rooms/1239731270268012685?search_mode=regular_search&adults=1&check_in=2026-06-15&check_out=2026-06-20&children=0&infants=0&pets=0&source_impression_id=p3_1778574058_P3vBnF2QGdh1t8A2&previous_page_section_name=1000&federated_search_id=5f9a2aee-252a-4329-aea5-444457c945d1"}},"color":"#FF385C"}],"flex":0},"styles":{"footer":{"separator":true}}}};
       const params = new URLSearchParams(window.location.search);
-      const shouldAutoShare = params.get("auto") !== "0";
+      const shouldAutoShare = params.get("auto") === "1";
 
       const statusEl = document.querySelector("#status");
       const statusTextEl = document.querySelector("#statusText");
       const shareButton = document.querySelector("#shareButton");
       const closeButton = document.querySelector("#closeButton");
+      const plainMessageEl = document.querySelector("#plainMessage");
       let isSharing = false;
 
       const transientErrorPattern =
@@ -251,6 +334,7 @@
 
       function setStatus(message, tone = "loading") {
         statusTextEl.textContent = message;
+        statusEl.hidden = message === "";
         statusEl.classList.toggle("ready", tone === "ready");
         statusEl.classList.toggle("done", tone === "done");
         statusEl.classList.toggle("error", tone === "error");
@@ -307,6 +391,20 @@
         return JSON.parse(JSON.stringify(FLEX_MESSAGE));
       }
 
+      function getPlainMessage() {
+        return plainMessageEl.value.trim() || DEFAULT_PLAIN_MESSAGE;
+      }
+
+      function buildShareMessages() {
+        return [
+          {
+            type: "text",
+            text: getPlainMessage()
+          },
+          cloneFlexMessage()
+        ];
+      }
+
       function isInLineClient() {
         try {
           return Boolean(window.liff && liff.isInClient());
@@ -335,18 +433,18 @@
 
         isSharing = true;
         shareButton.disabled = true;
-        setStatus("LINEを開いています...", "loading");
+        setStatus("Opening LINE...", "loading");
         let keepButtonDisabled = false;
 
         try {
           if (!liff.isApiAvailable("shareTargetPicker")) {
-            throw new Error("この環境ではLINEシェアを利用できません。");
+            throw new Error("LINE sharing isn't available in this environment.");
           }
 
-          const message = cloneFlexMessage();
+          const messages = buildShareMessages();
           const result = await withRetry(
             () =>
-              liff.shareTargetPicker([message], {
+              liff.shareTargetPicker(messages, {
                 isMultiple: false
               }),
             {
@@ -356,19 +454,19 @@
           );
 
           if (result) {
-            setStatus("LINEでシェアしました。", "done");
+            setStatus("Shared on LINE.", "done");
             if (isInLineClient()) {
               keepButtonDisabled = true;
               window.setTimeout(closeWindowSafely, 120);
             }
           } else {
-            setStatus("もう一度シェアできます。", "ready");
+            setStatus("You can share again.", "ready");
           }
         } catch (error) {
           console.warn("LINE share failed", error);
           setStatus(
             isTransientError(error)
-              ? "もう一度シェアできます。"
+              ? "You can share again."
               : getErrorMessage(error),
             isTransientError(error) ? "ready" : "error"
           );
@@ -386,17 +484,17 @@
           });
 
           if (!liff.isLoggedIn()) {
-            setStatus("LINEログインを開いています...", "loading");
+            setStatus("Opening LINE login...", "loading");
             liff.login({ redirectUri: window.location.href });
             return;
           }
 
           if (!liff.isApiAvailable("shareTargetPicker")) {
-            setStatus("この環境ではLINEシェアを利用できません。", "error");
+            setStatus("LINE sharing isn't available in this environment.", "error");
             return;
           }
 
-          setStatus(shouldAutoShare ? "LINEを開いています..." : "シェアできます。", "ready");
+          setStatus(shouldAutoShare ? "Opening LINE..." : "", "ready");
 
           if (shouldAutoShare) {
             await waitForLineClientReady();

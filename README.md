@@ -1,10 +1,10 @@
 # LINE LIFF Share Page
 
-Production-style LIFF share page for testing `shareTargetPicker()` with a Flex Message listing card.
+Production-style LIFF share page for testing `shareTargetPicker()` with a plain text message and a Flex Message listing card.
 
 The real LINE test needs a public HTTPS URL. The `public/` directory is a complete static site:
 
-- `public/index.html` is the LIFF share page and embeds the full Flex Message so the share flow does not need an extra runtime fetch.
+- `public/index.html` is the LIFF middle page and embeds the full Flex Message so the share flow does not need an extra runtime fetch.
 - `public/flex-message.json` is kept as a reference/debug copy of the same Flex Message.
 - `data/pdp.json` stores the source Flex bubble used by the inline message.
 
@@ -64,16 +64,16 @@ https://YOUR_GITHUB_USER.github.io/line-liff-flex-test/
 
 Use that full URL as the LIFF endpoint URL in the LINE Developers Console.
 
-Then use this URL from the native app share entry. The picker opens automatically after LIFF init/login:
+Then use this URL from the native app share entry. The user lands on the middle page, can add context, and then opens the picker:
 
 ```text
 https://liff.line.me/2010072810-4TWyKraj
 ```
 
-Use this manual mode URL if you want to land on the test page first:
+Use this auto mode URL only when you want to bypass the middle page and open the picker after LIFF init/login:
 
 ```text
-https://liff.line.me/2010072810-4TWyKraj?auto=0
+https://liff.line.me/2010072810-4TWyKraj?auto=1
 ```
 
 ### Alternative: Vercel / Netlify / Cloudflare Pages
@@ -134,7 +134,7 @@ Use LIFF ID:
 
 Deploy this app to an HTTPS host, then configure the LIFF endpoint URL to that deployed root URL.
 
-Use this test URL from the native app share entry. The picker opens automatically after LIFF init/login:
+Use this test URL from the native app share entry. The user lands on the middle page, can add context, and then opens the picker:
 
 ```text
 https://liff.line.me/2010072810-4TWyKraj
@@ -146,15 +146,16 @@ For demos after a fresh deploy, append any version query value to avoid stale We
 https://liff.line.me/2010072810-4TWyKraj?v=COMMIT_OR_TIMESTAMP
 ```
 
-Use this manual mode URL if you want to land on the test page first:
+Use this auto mode URL only when you want to bypass the middle page:
 
 ```text
-https://liff.line.me/2010072810-4TWyKraj?auto=0
+https://liff.line.me/2010072810-4TWyKraj?auto=1
 ```
 
 ## Notes
 
 - The Flex JSON source is `data/pdp.json`; the runtime message is embedded in `public/index.html` to avoid an extra fetch inside LINE.
+- The share call sends two messages together: a plain text message first, then the Flex listing card.
 - The shared Flex card keeps the original footer button and intentionally has no hero tap action for this demo.
 - The page shows listing context only; it does not display the current LINE user's account details.
 - This app intentionally does not use LINE Messaging API or LINE iOS SDK.
