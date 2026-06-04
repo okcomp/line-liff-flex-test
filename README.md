@@ -20,8 +20,8 @@ This repo keeps the two demo experiences as separate branches so the Airbnb app 
 Deploy the version you want to demo by running the Pages workflow on that branch:
 
 ```bash
-gh workflow run deploy-pages.yml --repo okcomp/line-liff-flex-test --ref main
-gh workflow run deploy-pages.yml --repo okcomp/line-liff-flex-test --ref codex/liff-blank-fast
+gh workflow run deploy-pages.yml --repo okcomp/line-liff-flex-test --ref main -f deploy_ref=main
+gh workflow run deploy-pages.yml --repo okcomp/line-liff-flex-test --ref main -f deploy_ref=codex/liff-blank-fast
 ```
 
 Check the latest deploy:
