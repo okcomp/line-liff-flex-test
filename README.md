@@ -15,7 +15,7 @@ Deploy `public/` to any HTTPS static host, then set that deployed URL as the LIF
 This repo keeps the two demo experiences as separate branches so the Airbnb app can keep opening the same LIFF URL:
 
 - `main`: production-style middle page with listing context, editable plain message, and a manual share button.
-- `codex/liff-blank-fast`: blank fast path with page title `preparing ..`; it initializes LIFF and opens the picker as quickly as possible.
+- `codex/liff-blank-fast`: blank fast path with page title `Preparing your link`; it initializes LIFF and opens the picker as quickly as possible.
 
 Deploy the version you want to demo by running the Pages workflow on that branch:
 
