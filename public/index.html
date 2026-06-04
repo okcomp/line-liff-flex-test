@@ -284,6 +284,8 @@
       const shareButton = document.querySelector("#shareButton");
       const plainMessageEl = document.querySelector("#plainMessage");
       let isSharing = false;
+      let keyboardScrollTimer;
+      let keyboardResizeTimer;
 
       const transientErrorPattern =
         /Load failed|Failed to fetch|NetworkError|network|timeout|timed out/i;
@@ -380,23 +382,29 @@
         document.documentElement.style.setProperty("--keyboard-spacer", `${spacer}px`);
       }
 
-      function scrollMessageIntoView() {
+      function scrollMessageIntoView({ behavior = "auto" } = {}) {
         if (document.activeElement !== plainMessageEl) {
           return;
         }
 
-        plainMessageEl.scrollIntoView({
-          block: "center",
-          inline: "nearest",
-          behavior: "smooth"
-        });
+        const rect = plainMessageEl.getBoundingClientRect();
+        const viewportHeight = window.visualViewport?.height || window.innerHeight;
+        const targetBottom = viewportHeight - 24;
+        const overflow = rect.bottom - targetBottom;
+
+        if (overflow > 0) {
+          window.scrollBy({
+            top: overflow,
+            left: 0,
+            behavior
+          });
+        }
       }
 
       function scheduleMessageScroll() {
         setKeyboardLayout(true);
-        [0, 80, 220, 420, 700].forEach((delayMs) => {
-          window.setTimeout(scrollMessageIntoView, delayMs);
-        });
+        window.clearTimeout(keyboardScrollTimer);
+        keyboardScrollTimer = window.setTimeout(scrollMessageIntoView, 260);
       }
 
       function isInLineClient() {
@@ -509,6 +517,8 @@
       plainMessageEl.addEventListener("focus", scheduleMessageScroll);
       plainMessageEl.addEventListener("click", scheduleMessageScroll);
       plainMessageEl.addEventListener("blur", () => {
+        window.clearTimeout(keyboardScrollTimer);
+        window.clearTimeout(keyboardResizeTimer);
         window.setTimeout(() => {
           setKeyboardLayout(document.activeElement === plainMessageEl);
         }, 180);
@@ -517,7 +527,9 @@
       if (window.visualViewport) {
         window.visualViewport.addEventListener("resize", () => {
           if (document.activeElement === plainMessageEl) {
-            scheduleMessageScroll();
+            setKeyboardLayout(true);
+            window.clearTimeout(keyboardResizeTimer);
+            keyboardResizeTimer = window.setTimeout(scrollMessageIntoView, 80);
           }
         });
       }
