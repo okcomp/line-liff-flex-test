@@ -395,25 +395,29 @@
         keyboardScrollTimer = window.setTimeout(scrollMessageIntoView, 260);
       }
 
-      function isInLineClient() {
-        try {
-          return Boolean(window.liff && liff.isInClient());
-        } catch (error) {
-          return false;
-        }
+      function getAirbnbReturnUrl() {
+        return (
+          FLEX_MESSAGE?.contents?.footer?.contents?.[0]?.action?.uri ||
+          "https://www.airbnb.jp/rooms/1239731270268012685"
+        );
       }
 
-      function closeWindowSafely() {
-        if (isInLineClient()) {
-          try {
-            liff.closeWindow();
+      function openAirbnbApp() {
+        const url = getAirbnbReturnUrl();
+
+        try {
+          if (window.liff && typeof liff.openWindow === "function") {
+            liff.openWindow({
+              url,
+              external: true
+            });
             return;
-          } catch (error) {
-            console.warn("Could not close LIFF window", error);
           }
+        } catch (error) {
+          console.warn("Could not open Airbnb through LIFF", error);
         }
 
-        window.close();
+        window.location.href = url;
       }
 
       async function shareListing({ auto = false } = {}) {
@@ -424,7 +428,6 @@
         isSharing = true;
         shareButton.disabled = true;
         setStatus("Opening LINE...", "loading");
-        let keepButtonDisabled = false;
 
         try {
           if (!liff.isApiAvailable("shareTargetPicker")) {
@@ -444,11 +447,8 @@
           );
 
           if (result) {
-            setStatus("Shared on LINE.", "done");
-            if (isInLineClient()) {
-              keepButtonDisabled = true;
-              window.setTimeout(closeWindowSafely, 120);
-            }
+            setStatus("Opening Airbnb...", "done");
+            window.setTimeout(openAirbnbApp, 120);
           } else {
             setStatus("You can share again.", "ready");
           }
@@ -462,7 +462,7 @@
           );
         } finally {
           isSharing = false;
-          shareButton.disabled = keepButtonDisabled;
+          shareButton.disabled = false;
         }
       }
 
