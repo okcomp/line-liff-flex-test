@@ -395,6 +395,16 @@
         keyboardScrollTimer = window.setTimeout(scrollMessageIntoView, 260);
       }
 
+      function closeLiffWindowSafely() {
+        try {
+          if (window.liff && liff.isInClient()) {
+            liff.closeWindow();
+          }
+        } catch (error) {
+          console.warn("Could not close LIFF window", error);
+        }
+      }
+
       async function shareListing({ auto = false } = {}) {
         if (isSharing) {
           return;
@@ -423,6 +433,7 @@
 
           if (result) {
             setStatus("Shared on LINE.", "done");
+            window.setTimeout(closeLiffWindowSafely, 120);
           } else {
             setStatus("You can share again.", "ready");
           }
