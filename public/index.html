@@ -395,28 +395,6 @@
         keyboardScrollTimer = window.setTimeout(scrollMessageIntoView, 260);
       }
 
-      function getAirbnbReturnUrl() {
-        return "https://www.airbnb.jp/";
-      }
-
-      function openAirbnbApp() {
-        const url = getAirbnbReturnUrl();
-
-        try {
-          if (window.liff && typeof liff.openWindow === "function") {
-            liff.openWindow({
-              url,
-              external: true
-            });
-            return;
-          }
-        } catch (error) {
-          console.warn("Could not open Airbnb through LIFF", error);
-        }
-
-        window.location.href = url;
-      }
-
       async function shareListing({ auto = false } = {}) {
         if (isSharing) {
           return;
@@ -444,8 +422,7 @@
           );
 
           if (result) {
-            setStatus("Opening Airbnb...", "done");
-            window.setTimeout(openAirbnbApp, 120);
+            setStatus("Shared on LINE.", "done");
           } else {
             setStatus("You can share again.", "ready");
           }
