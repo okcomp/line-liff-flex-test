@@ -396,10 +396,7 @@
       }
 
       function getAirbnbReturnUrl() {
-        return (
-          FLEX_MESSAGE?.contents?.footer?.contents?.[0]?.action?.uri ||
-          "https://www.airbnb.jp/rooms/1239731270268012685"
-        );
+        return "https://www.airbnb.jp/";
       }
 
       function openAirbnbApp() {
@@ -438,7 +435,7 @@
           const result = await withRetry(
             () =>
               liff.shareTargetPicker(messages, {
-                isMultiple: false
+                isMultiple: true
               }),
             {
               attempts: auto ? 2 : 1,
