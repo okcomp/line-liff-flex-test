@@ -343,11 +343,11 @@
 
       function buildShareMessages() {
         return [
+          cloneFlexMessage(),
           {
             type: "text",
             text: getPlainMessage()
-          },
-          cloneFlexMessage()
+          }
         ];
       }
 
